@@ -1,10 +1,12 @@
-# vue-cli
+# Thomas Neil personal portfolio site
+
+## (vue-cli)
 
 > A Vue.js project
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
