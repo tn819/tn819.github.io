@@ -1,19 +1,23 @@
 import { createTheme } from '@mui/material/styles'
-import { red } from '@mui/material/colors'
 
 // Create a theme instance.
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#FBDAD0',
     },
     secondary: {
-      main: '#19857b',
+      main: '#FFC25E',
+    },
+    text: {
+      primary: '#697D7A',
+      secondary: '#4A2D22',
     },
     error: {
-      main: red.A400,
+      main: '#FF5541',
     },
   },
+  spacing: 4,
   typography: {
     fontFamily: [
       '-apple-system',

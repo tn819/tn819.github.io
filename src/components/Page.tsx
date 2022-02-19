@@ -1,9 +1,10 @@
-import { NextPage } from 'next'
+import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import NavBar from './NavBar'
+import { NextPage } from 'next'
+
 import HideOnScroll from './HideOnScroll'
+import NavBar from './NavBar'
 
 const Page: NextPage<{ title: string }> = ({ children, title }) => {
   return (
