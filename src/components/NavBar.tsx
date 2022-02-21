@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 const pages = [
   { href: '/', label: 'home' },
-  { href: 'about', label: 'about' },
+  { href: '/about', label: 'about' },
 ]
 
 const NavBar = () => {

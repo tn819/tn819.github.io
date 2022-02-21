@@ -5,16 +5,20 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#FBDAD0',
+      contrastText: '#4A2D22',
     },
     secondary: {
       main: '#FFC25E',
     },
     text: {
-      primary: '#697D7A',
-      secondary: '#4A2D22',
+      secondary: '#697D7A',
+      primary: '#4A2D22',
     },
     error: {
       main: '#FF5541',
+    },
+    background: {
+      default: '#F8EEE7',
     },
   },
   spacing: 4,

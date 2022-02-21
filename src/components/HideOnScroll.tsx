@@ -7,7 +7,9 @@ interface Props {
 }
 
 const HideOnScroll: React.FC<Props> = ({ children }) => {
-  const trigger = useScrollTrigger()
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+  })
 
   return (
     <Slide appear={false} direction="down" in={!trigger}>

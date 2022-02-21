@@ -3,15 +3,12 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { NextPage } from 'next'
 
-import HideOnScroll from './HideOnScroll'
 import NavBar from './NavBar'
 
 const Page: NextPage<{ title: string }> = ({ children, title }) => {
   return (
     <Container maxWidth="lg">
-      <HideOnScroll>
-        <NavBar />
-      </HideOnScroll>
+      <NavBar />
       <Box
         sx={{
           my: 4,
@@ -21,7 +18,12 @@ const Page: NextPage<{ title: string }> = ({ children, title }) => {
           alignItems: 'center',
         }}
       >
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{ fontWeight: 'bold' }}
+          gutterBottom
+        >
           {title}
         </Typography>
         {children}
