@@ -36,9 +36,52 @@ const NavBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <IconButton sx={{ p: 0 }}>
-              <Avatar alt="Thomas Neil" src="/images/profile.jpg" />
+          <Box
+            sx={{ display: 'flex', flexGrow: 0, alignItems: 'center', gap: 2 }}
+          >
+            <IconButton
+              sx={{ p: 1, backgroundColor: 'white' }}
+              href={'https://www.linkedin.com/in/thomas-neil/'}
+              target="_blank"
+            >
+              <Avatar
+                alt="Linkedin"
+                src="/images/social/linkedin.svg"
+                sx={{ width: 40, height: 40 }}
+              />
+            </IconButton>
+            <IconButton
+              sx={{ p: 1, backgroundColor: 'white' }}
+              href={'https://www.goodreads.com/user/show/96474981-thomas-neil'}
+              target="_blank"
+            >
+              <Avatar
+                alt="Goodreads"
+                src="/images/social/goodreads.svg"
+                sx={{ width: 40, height: 40 }}
+              />
+            </IconButton>
+            <IconButton
+              sx={{ p: 1, backgroundColor: 'white' }}
+              href={'https://github.com/tn819'}
+              target="_blank"
+            >
+              <Avatar
+                alt="Github"
+                src="/images/social/github.svg"
+                sx={{ width: 40, height: 40 }}
+              />
+            </IconButton>
+            <IconButton
+              sx={{ p: 1, backgroundColor: 'white' }}
+              href={'https://medium.com/@thomasneil819'}
+              target="_blank"
+            >
+              <Avatar
+                alt="Medium"
+                src="/images/social/medium.svg"
+                sx={{ width: 40, height: 40 }}
+              />
             </IconButton>
           </Box>
         </Toolbar>

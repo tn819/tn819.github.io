@@ -18,7 +18,9 @@
 # misc
 .DS_Store
 *.pem
-tsconfig.tsbuildinfo
+
+# TypeScript cache
+*.tsbuildinfo
 
 # debug
 npm-debug.log*
