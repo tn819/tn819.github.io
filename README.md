@@ -1,6 +1,6 @@
 # Thomas Neil personal site
 
-<h2>[Check it out live](https://tn819-github-io.vercel.app/)<h2>
+[Check it out live](https://tn819-github-io.vercel.app/)
 
 ## How to use
 
