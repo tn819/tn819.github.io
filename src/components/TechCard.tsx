@@ -1,7 +1,26 @@
-import { Avatar, AvatarGroup, Card, Grid, Typography } from '@mui/material'
+import {
+  Avatar,
+  AvatarGroup,
+  Card,
+  Grid,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import Image from 'next/image'
 
 import { Spacer } from '.'
+
+type TechItemAvatarProps = { alt: string; path: string }
+
+function TechItemAvatar({ alt, path }: TechItemAvatarProps) {
+  return (
+    <Tooltip key={alt} title={alt} disableFocusListener>
+      <Avatar sx={{ width: 56, height: 56 }}>
+        <Image src={`/images/tech/${path}`} alt={alt} height={40} width={40} />
+      </Avatar>
+    </Tooltip>
+  )
+}
 
 const TechAvatarGroup = ({
   techItems,
@@ -13,25 +32,9 @@ const TechAvatarGroup = ({
   return (
     <AvatarGroup>
       {techItems.map((tech) => (
-        <Avatar key={tech} sx={{ width: 56, height: 56 }}>
-          <Image
-            src={`/images/tech/${tech}.svg`}
-            alt={tech}
-            height={40}
-            width={40}
-          />
-        </Avatar>
+        <TechItemAvatar key={tech} alt={tech} path={tech + '.svg'} />
       ))}
-      {png ? (
-        <Avatar key={png} sx={{ width: 56, height: 56 }}>
-          <Image
-            src={`/images/tech/${png}.png`}
-            alt={png}
-            height={40}
-            width={40}
-          />
-        </Avatar>
-      ) : undefined}
+      {png ? <TechItemAvatar alt={png} path={png + '.png'} /> : undefined}
     </AvatarGroup>
   )
 }
@@ -47,7 +50,7 @@ const TechCard = ({
   comment: string
   png?: string
 }) => (
-  <Grid item xs={4}>
+  <Grid item xs={12} md={6} lg={4} component="div">
     <Card
       sx={{
         height: '100%',
@@ -56,9 +59,10 @@ const TechCard = ({
         flexDirection: 'column',
         alignItems: 'center',
         p: 4,
+        boxShadow: 5,
       }}
     >
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" fontWeight={700} gutterBottom>
         {title}
       </Typography>
       <TechAvatarGroup techItems={techItems} png={png} />

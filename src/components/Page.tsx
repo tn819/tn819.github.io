@@ -3,7 +3,9 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { NextPage } from 'next'
 
+import Copyright from './Copyright'
 import NavBar from './NavBar'
+import Spacer from './Spacer'
 
 const Page: NextPage<{ title: string }> = ({ children, title }) => {
   return (
@@ -27,6 +29,8 @@ const Page: NextPage<{ title: string }> = ({ children, title }) => {
           {title}
         </Typography>
         {children}
+        <Spacer size={8} />
+        <Copyright />
       </Box>
     </Container>
   )

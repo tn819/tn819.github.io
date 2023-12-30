@@ -3,7 +3,7 @@ import { Box, Button, Grid, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import { openPopupWidget } from 'react-calendly'
 
-import { Copyright, Page, Spacer, TechCard } from '../src/components'
+import { Page, Spacer, TechCard } from '../src/components'
 
 const Home: NextPage = () => {
   const handleCalendlyClick = () =>
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
         listening deeply to users and improving people's lives.`}
       </Typography>
       <Spacer size={10} />
-      <Grid container spacing={10}>
+      <Grid container spacing={5}>
         <TechCard
           title="Code"
           comment={
@@ -31,35 +31,39 @@ const Home: NextPage = () => {
           techItems={['typescript', 'javascript']}
         />
         <TechCard
-          title="AWS"
+          title="Cloud"
           comment={
-            'I am an AWS Certified Developer, intrigued by serverless patterns'
+            'I am an AWS Certified Developer, intrigued by serverless patterns. I have also worked with GCP and Kubernetes.'
           }
-          techItems={['aws', 'cloudformation', 'lambda', 'aws-sns']}
+          techItems={['aws', 'cloudformation', 'lambda']}
         />
         <TechCard
           title="Back-end"
           comment={
-            'I have set up scaleable APIs in Node with different types of persistence'
+            'I have set up scaleable APIs in Node using express, nest, fastify and different types of persistence.'
           }
-          techItems={['node', 'nest', 'postgres']}
+          techItems={['node', 'nest', 'fastify', 'postgres']}
         />
         <TechCard
           title="Testing"
           comment={
-            'I value confidence in code via robust e2e, integration, and unit testing'
+            'I value confidence in code via robust e2e, integration, and unit testing. Tests are always the first thing I read in a new project/repo.'
           }
-          techItems={['cypress', 'jest', 'testing-library']}
+          techItems={['cypress', 'jest', 'testing-library', 'playwright']}
         />
         <TechCard
           title="Front-end"
-          comment={'React/React Native fan, styling with Emotion and css-in-js'}
-          techItems={['react']}
+          comment={
+            'React/React Native fan. Worked with Next. Enjoy styling with Emotion, css-in-js and Material UI, but open to new patterns.'
+          }
+          techItems={['react', 'next']}
           png={'emotion'}
         />
         <TechCard
           title="Analytics/Monitoring"
-          comment={'Good decisions start with clear measurement and monitoring'}
+          comment={
+            'Good decisions start with clear measurement and monitoring, which is a qualitative and quantitative process.'
+          }
           techItems={['datadog', 'amplitude']}
           png={'splunk'}
         />
@@ -74,9 +78,6 @@ const Home: NextPage = () => {
           Schedule a chat
         </Button>
       </Box>
-      <Spacer size={10} />
-
-      <Copyright />
     </Page>
   )
 }

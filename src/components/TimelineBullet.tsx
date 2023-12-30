@@ -25,14 +25,16 @@ export const TimelineItemWithIcon = ({
   return (
     <TimelineItem>
       <TimelineOppositeContent
-        sx={{ m: 'auto 0' }}
         variant="h5"
         color="text.secondary"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
       >
         {bullet.title}
       </TimelineOppositeContent>
       <TimelineSeparator>
-        <TimelineDot>
+        <TimelineDot color="secondary">
           <Icon />
         </TimelineDot>
         <TimelineConnector />

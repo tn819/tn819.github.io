@@ -17,11 +17,9 @@ const theme = createTheme({
     error: {
       main: '#FF5541',
     },
-    background: {
-      default: '#F8EEE7',
-    },
   },
   spacing: 4,
+  shape: { borderRadius: 4 },
   typography: {
     fontFamily: [
       '-apple-system',
