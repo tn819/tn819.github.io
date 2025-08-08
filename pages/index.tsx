@@ -14,8 +14,8 @@ const Home: NextPage = () => {
   return (
     <Page title="Thomas Neil">
       <Typography variant="h6" gutterBottom>
-        I am a Berlin-based Javascript and Typescript full-stack software
-        engineer.
+        I am a Berlin-based Typescript full-stack software engineer. Dabbling in
+        python.
       </Typography>
       <Typography variant="h6" gutterBottom>
         {`I am passionate about coding teamwork and collaboration, as well as
@@ -26,16 +26,16 @@ const Home: NextPage = () => {
         <TechCard
           title="Code"
           comment={
-            'I enjoy working in fullstack Javascript, ideally Typescript'
+            'I enjoy working in fullstack Javascript, ideally Typescript. Expanding into python.'
           }
-          techItems={['typescript', 'javascript']}
+          techItems={['typescript', 'javascript', 'python']}
         />
         <TechCard
           title="Cloud"
           comment={
-            'I am an AWS Certified Developer, intrigued by serverless patterns. I have also worked with GCP and Kubernetes.'
+            'I started in AWS land and was intrigued by serverless patterns. I then worked with GCP and Kubernetes. I run towards yaml files.'
           }
-          techItems={['aws', 'cloudformation', 'lambda']}
+          techItems={['aws', 'k8s', 'cloudformation', 'lambda']}
         />
         <TechCard
           title="Back-end"
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
         <TechCard
           title="Front-end"
           comment={
-            'React/React Native fan. Worked with Next. Enjoy styling with Emotion, css-in-js and Material UI, but open to new patterns.'
+            'React/React Native fan. Worked extensively with Next the last few years. Enjoyed styling with tailwind, Emotion, css-in-js and Material UI.'
           }
           techItems={['react', 'next']}
           png={'emotion'}
@@ -62,9 +62,9 @@ const Home: NextPage = () => {
         <TechCard
           title="Analytics/Monitoring"
           comment={
-            'Good decisions start with clear measurement and monitoring, which is a qualitative and quantitative process.'
+            'Good decisions start with clear measurement and monitoring, which is a qualitative and quantitative process. I enjoy this from both an operational and product perspective.'
           }
-          techItems={['datadog', 'amplitude']}
+          techItems={['datadog', 'amplitude', 'grafana']}
           png={'splunk'}
         />
       </Grid>
