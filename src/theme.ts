@@ -225,6 +225,7 @@ export const darkTheme = createTheme({
           boxShadow:
             '0 0 30px rgba(0, 217, 255, 0.15), 0 4px 6px rgba(0, 0, 0, 0.3)',
           border: '1px solid rgba(0, 217, 255, 0.3)',
+          background: 'linear-gradient(135deg, #12121A 0%, #1A1A24 100%)',
         },
       },
     },

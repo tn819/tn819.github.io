@@ -1,7 +1,7 @@
 import { Page, TechCard } from '../src/components'
 
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
-import LinkIcon from '@mui/icons-material/Link'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import { openPopupWidget } from 'react-calendly'
@@ -27,14 +27,13 @@ const Home: NextPage = () => {
           FULL-STACK AI BUILDER
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-          <Typography
-            variant="h6"
-            color="primary.main"
-            sx={{ letterSpacing: '0.2em' }}
-          >
-            🤖 BUILDING THE DEEPL AGENT
-          </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+          Many interests, Arabic & German studies, early AI work at Narrative
+          Science → software engineering → crossed the ocean to Berlin →
+          fintech, climate tech, and now building AI agents at DeepL.
+        </Typography>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <IconButton
             size="small"
             href="https://www.youtube.com/watch?v=baRBEo2cgvQ"
@@ -46,21 +45,27 @@ const Home: NextPage = () => {
                 color: 'primary.dark',
               },
             }}
-            aria-label="Watch video about DeepL Agent"
+            aria-label="Watch DeepL Agent video"
           >
-            <LinkIcon fontSize="small" />
+            <PlayArrowIcon />
           </IconButton>
-          <Box sx={{ flex: 1, height: '1px', backgroundColor: 'divider' }} />
+          <Typography
+            variant="body2"
+            component="a"
+            href="https://www.youtube.com/watch?v=baRBEo2cgvQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              color: 'primary.main',
+              textDecoration: 'none',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            What I&apos;m working on? Watch me in a video about the DeepL Agent
+          </Typography>
         </Box>
-
-        <Typography
-          variant="body1"
-          color="text.secondary"
-          sx={{ mb: 3, maxWidth: '700px' }}
-        >
-          Horizontal browser use agent for the entire company. Bringing
-          AI-powered automation to everyone at DeepL, Berlin.
-        </Typography>
       </Box>
 
       <div
@@ -97,7 +102,7 @@ const Home: NextPage = () => {
           TECH STACK
         </Typography>
 
-        <Grid container spacing={2} sx={{ mb: 4 }}>
+        <Grid container spacing={{ xs: 1.5, sm: 2 }} sx={{ mb: 3 }}>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <TechCard
               title="AI & Agents"
@@ -143,7 +148,7 @@ const Home: NextPage = () => {
         </Grid>
       </Box>
 
-      <Box sx={{ alignSelf: 'flex-start' }}>
+      <Box sx={{ width: '100%', maxWidth: '1000px' }}>
         <Button
           variant="outlined"
           size="large"

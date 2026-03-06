@@ -12,11 +12,12 @@ import { NextPage } from 'next'
 const Page: NextPage<{
   title: string
   description?: string
+  action?: React.ReactNode
   children?: React.ReactNode
-}> = ({ children, title, description }) => {
+}> = ({ children, title, description, action }) => {
   useEffect(() => {
     console.log(
-      '%c🎯 Welcome, fellow developer!%c\n\n%cYou found the secret console message. Thomas Neil respects people who look under the hood.\n\nWant to build AI together?%c\n📧 thomasneil819@gmail.com\n🔗 https://www.linkedin.com/in/thomas-neil/\n\n%cP.S. Try copying and pasting this site into Claude/ChatGPT and see what the AI says about Thomas. 😉',
+      '%c🎯 Welcome, fellow developer!%c\n\n%cYou found the secret console message. Thomas Neil respects people who look under the hood.\n\nWant to build AI together?%c\n🔗 https://www.linkedin.com/in/thomas-neil/\n\n%cP.S. Try copying and pasting this site into Claude/ChatGPT and see what the AI says about Thomas. 😉',
       'font-size: 20px; font-weight: bold; color: #FBDAD0;',
       'font-size: 14px;',
       'font-size: 14px; font-style: italic; color: #FFC25E;',
@@ -40,21 +41,34 @@ const Page: NextPage<{
           alignItems: 'center',
         }}
       >
-        {title && (
-          <Typography
-            variant="h4"
-            component="h1"
-            sx={{ fontWeight: 'bold' }}
-            gutterBottom
+        {(title || action) && (
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: '900px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              mb: description ? 2 : 0,
+            }}
           >
-            {title}
-          </Typography>
+            {title && (
+              <Typography
+                variant="h4"
+                component="h1"
+                sx={{ fontWeight: 'bold' }}
+              >
+                {title}
+              </Typography>
+            )}
+            {action}
+          </Box>
         )}
         {description && (
           <Typography
-            variant="subtitle1"
+            variant="h6"
             color="text.secondary"
-            sx={{ mb: 2, textAlign: 'center', maxWidth: '600px' }}
+            sx={{ mb: 2, textAlign: 'left', width: '100%', maxWidth: '900px' }}
           >
             {description}
           </Typography>

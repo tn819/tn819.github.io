@@ -4,8 +4,8 @@ import { Page } from '../../src/components'
 
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import SearchIcon from '@mui/icons-material/Search'
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import DensitySmallIcon from '@mui/icons-material/DensitySmall'
+import DensityLargeIcon from '@mui/icons-material/DensityLarge'
 import {
   Box,
   Card,
@@ -14,6 +14,7 @@ import {
   IconButton,
   InputAdornment,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import type { NextPage } from 'next'
@@ -283,14 +284,6 @@ const ArticlesIndex: NextPage = () => {
     router.replace(newUrl, undefined, { shallow: true })
   }
 
-  const allTags = useMemo(() => {
-    const tags = new Set<string>()
-    articles.forEach((article) => {
-      article.tags.forEach((tag) => tags.add(tag))
-    })
-    return Array.from(tags).sort()
-  }, [])
-
   const filteredArticles = useMemo(() => {
     let result = articles
 
@@ -313,6 +306,15 @@ const ArticlesIndex: NextPage = () => {
 
     return result
   }, [selectedTags, searchQuery])
+
+  const allTags = useMemo(() => {
+    const tags = new Set<string>()
+    filteredArticles.forEach((article) => {
+      article.tags.forEach((tag) => tags.add(tag))
+    })
+    selectedTags.forEach((tag) => tags.add(tag))
+    return Array.from(tags).sort()
+  }, [filteredArticles, selectedTags])
 
   const toggleTag = (tag: string) => {
     const newTags = selectedTags.includes(tag)
@@ -339,30 +341,20 @@ const ArticlesIndex: NextPage = () => {
 
   return (
     <Page
-      title=""
-      description="High signal writing on AI, engineering, and building"
+      title="High signal articles on AI, engineering, or whatever"
+      action={
+        <Tooltip title={expanded ? 'Collapse all' : 'Expand all'}>
+          <IconButton
+            onClick={() => setExpanded(!expanded)}
+            sx={{ color: 'text.secondary' }}
+          >
+            {expanded ? <DensityLargeIcon /> : <DensitySmallIcon />}
+          </IconButton>
+        </Tooltip>
+      }
     >
       <Box sx={{ width: '100%', maxWidth: '900px' }}>
         <Box sx={{ mb: 4 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              mb: 3,
-            }}
-          >
-            <Typography variant="h5" fontWeight={600}>
-              High signal writing on AI, engineering, and building
-            </Typography>
-            <IconButton
-              onClick={() => setExpanded(!expanded)}
-              sx={{ color: 'text.secondary' }}
-            >
-              {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </IconButton>
-          </Box>
-
           <TextField
             fullWidth
             size="small"

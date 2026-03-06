@@ -46,21 +46,21 @@ const TechCard = ({
   <Card
     sx={{
       height: '100%',
-      minHeight: 180,
+      minHeight: { xs: 140, sm: 160, md: 180 },
       width: '100%',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       p: { xs: 2, sm: 3, md: 4 },
-      boxShadow: 3,
+      boxShadow: 2,
     }}
   >
     <Typography variant="h6" fontWeight={700} gutterBottom textAlign="center">
       {title}
     </Typography>
     <TechAvatarGroup techItems={techItems} png={png} />
-    <Spacer size={3} />
+    <Spacer size={2} />
     <Typography variant="body2" textAlign="center">
       {comment}
     </Typography>

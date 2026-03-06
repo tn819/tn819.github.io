@@ -15,19 +15,34 @@ const DarkModeContext = createContext<DarkModeContextType | undefined>(
   undefined
 )
 
-function getInitialDarkMode(): boolean {
-  if (typeof window === 'undefined') return false
-  const savedMode = localStorage.getItem('darkMode')
-  if (savedMode !== null) return savedMode === 'true'
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
+function getInitialMode(): boolean {
+  if (typeof window === 'undefined') return true
+  const saved = localStorage.getItem('darkMode')
+  if (saved !== null) return saved === 'true'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
 }
 
 export function DarkModeProvider({ children }: { children: ReactNode }) {
-  const [darkMode, setDarkMode] = useState(getInitialDarkMode)
+  const [darkMode, setDarkMode] = useState(true)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    localStorage.setItem('darkMode', darkMode.toString())
-  }, [darkMode])
+    // This runs once on mount to set the correct initial mode
+    const initialMode = getInitialMode()
+    if (initialMode !== darkMode) {
+      setDarkMode(initialMode)
+    }
+    setMounted(true)
+    // We only want this to run once, but ESLint wants darkMode in deps
+    // The check above prevents infinite loops
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem('darkMode', darkMode.toString())
+    }
+  }, [darkMode, mounted])
 
   const toggleDarkMode = () => setDarkMode(!darkMode)
 

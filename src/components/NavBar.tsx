@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import { useRouter } from 'next/router'
 
 const pages = [
   { href: '/about', label: 'about' },
@@ -42,6 +43,14 @@ const socialLinks = [
 
 const NavBar = () => {
   const { darkMode, toggleDarkMode } = useDarkMode()
+  const router = useRouter()
+
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return router.pathname === '/'
+    }
+    return router.pathname.startsWith(href)
+  }
 
   return (
     <AppBar
@@ -82,23 +91,40 @@ const NavBar = () => {
           </Typography>
 
           <Box sx={{ display: 'flex', gap: 1 }}>
-            {pages.map(({ href, label }) => (
-              <Button
-                key={href}
-                href={href}
-                sx={{
-                  color: 'text.secondary',
-                  fontWeight: 400,
-                  letterSpacing: '0.1em',
-                  fontSize: '0.8rem',
-                  '&:hover': {
-                    color: 'primary.main',
-                  },
-                }}
-              >
-                {label}
-              </Button>
-            ))}
+            {pages.map(({ href, label }) => {
+              const active = isActive(href)
+              return (
+                <Button
+                  key={href}
+                  href={href}
+                  sx={{
+                    color: active ? 'primary.main' : 'text.secondary',
+                    fontWeight: active ? 600 : 400,
+                    letterSpacing: '0.1em',
+                    fontSize: '0.8rem',
+                    position: 'relative',
+                    '&:hover': {
+                      color: 'primary.main',
+                    },
+                    '&::after': active
+                      ? {
+                          content: '""',
+                          position: 'absolute',
+                          bottom: 4,
+                          left: '50%',
+                          transform: 'translateX(-50%)',
+                          width: '60%',
+                          height: 2,
+                          bgcolor: 'primary.main',
+                          borderRadius: 1,
+                        }
+                      : {},
+                  }}
+                >
+                  {label}
+                </Button>
+              )
+            })}
           </Box>
         </Box>
 

@@ -1,5 +1,6 @@
 import { Page, TimelineItemWithIcon, TimelineBullet } from '../src/components'
 
+import DownloadIcon from '@mui/icons-material/Download'
 import { SchoolOutlined } from '@mui/icons-material'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff'
@@ -8,6 +9,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import PeopleIcon from '@mui/icons-material/People'
 import SmartToyOutlinedIcon from '@mui/icons-material/SmartToyOutlined'
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline'
+import { IconButton, Tooltip } from '@mui/material'
 import { Timeline } from '@mui/lab'
 import type { NextPage } from 'next'
 
@@ -76,8 +78,46 @@ export const PersonalBullets: TimelineBullet[] = [
 ]
 
 const About: NextPage = () => {
+  const downloadMarkdown = () => {
+    const allBullets = [...TimelineBullets, ...PersonalBullets]
+    const markdown = `# About Thomas Neil
+
+From Political Science to AI Engineering — a varied path across languages, industries, and technologies.
+
+## Background
+
+${allBullets.map((b) => `### ${b.title}\n\n${b.detail.trim()}`).join('\n\n')}
+
+---
+
+*Downloaded from thomasneil.com — AI-ready format*
+`
+    const blob = new Blob([markdown], { type: 'text/markdown' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'thomas-neil-about.md'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
   return (
-    <Page title="" description="From Political Science to AI Engineering">
+    <Page
+      title="Winding road through Arabic, German, software, now AI agents at DeepL in Berlin"
+      description="A varied path — Arabic & German, fintech & climate tech, now building AI agents at DeepL in Berlin"
+      action={
+        <Tooltip title="Download as Markdown (AI-ready)">
+          <IconButton
+            onClick={downloadMarkdown}
+            sx={{ color: 'text.secondary' }}
+          >
+            <DownloadIcon />
+          </IconButton>
+        </Tooltip>
+      }
+    >
       <Timeline position="alternate">
         {TimelineBullets.concat(...PersonalBullets)
           .reverse()

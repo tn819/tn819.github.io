@@ -7,7 +7,7 @@
     "node": ">=22.0.0 <23.0.0"
   },
   "scripts": {
-    "dev": "NODE_OPTIONS='--no-deprecation' next dev --turbopack=false",
+    "dev": "NODE_OPTIONS='--no-deprecation' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

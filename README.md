@@ -4,12 +4,14 @@
 
 ## How to use
 
-Install it and run:
+Install dependencies and start the development server:
 
 ```sh
 yarn
 yarn dev
 ```
+
+The site will be available at `http://localhost:3000`
 
 ## Tech
 
