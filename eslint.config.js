@@ -16,13 +16,6 @@ module.exports = [
     rules: {
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
-      'import/order': [
-        'error',
-        {
-          alphabetize: { order: 'asc', caseInsensitive: true },
-          'newlines-between': 'always',
-        },
-      ],
     },
   },
 ]

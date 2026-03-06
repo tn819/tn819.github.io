@@ -1,0 +1,11 @@
+#\!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running pre-push checks..."
+yarn tsc --noEmit || exit 1
+
+# Only lint tracked files (matches what deploy will build)
+TRACKED=$(git ls-files | grep -E "\.(tsx?|js)$")
+if [ -n "$TRACKED" ]; then
+  echo "$TRACKED" | xargs yarn eslint || exit 1
+fi
