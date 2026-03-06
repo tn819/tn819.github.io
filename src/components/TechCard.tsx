@@ -15,7 +15,7 @@ type TechItemAvatarProps = { alt: string; path: string }
 function TechItemAvatar({ alt, path }: TechItemAvatarProps) {
   return (
     <Tooltip key={alt} title={alt} disableFocusListener>
-      <Avatar sx={{ width: 56, height: 56 }}>
+      <Avatar sx={{ width: 56, height: 56, bgcolor: '#E0E0E0' }}>
         <Image src={`/images/tech/${path}`} alt={alt} height={40} width={40} />
       </Avatar>
     </Tooltip>
@@ -50,26 +50,28 @@ const TechCard = ({
   comment: string
   png?: string
 }) => (
-  <Grid item xs={12} md={6} lg={4} component="div">
-    <Card
-      sx={{
-        height: '100%',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        p: 4,
-        boxShadow: 5,
-      }}
-    >
-      <Typography variant="h5" fontWeight={700} gutterBottom>
-        {title}
-      </Typography>
-      <TechAvatarGroup techItems={techItems} png={png} />
-      <Spacer size={5} />
-      <Typography variant="h6">{comment} </Typography>
-    </Card>
-  </Grid>
+  <Card
+    sx={{
+      height: '100%',
+      minHeight: 180,
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      p: { xs: 2, sm: 3, md: 4 },
+      boxShadow: 3,
+    }}
+  >
+    <Typography variant="h6" fontWeight={700} gutterBottom textAlign="center">
+      {title}
+    </Typography>
+    <TechAvatarGroup techItems={techItems} png={png} />
+    <Spacer size={3} />
+    <Typography variant="body2" textAlign="center">
+      {comment}
+    </Typography>
+  </Card>
 )
 
 export default TechCard
