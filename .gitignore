@@ -44,3 +44,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# generated screenshots and test files
+*.png
+!public/images/**/*.png
+tmp/
+test-screenshots/
