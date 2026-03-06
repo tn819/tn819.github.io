@@ -77,7 +77,7 @@ export const PersonalBullets: TimelineBullet[] = [
 
 const About: NextPage = () => {
   return (
-    <Page title="About" description="From Political Science to AI Engineering">
+    <Page title="" description="From Political Science to AI Engineering">
       <Timeline position="alternate">
         {TimelineBullets.concat(...PersonalBullets)
           .reverse()
