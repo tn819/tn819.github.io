@@ -1,4 +1,5 @@
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace'
+import * as React from 'react'
+
 import {
   TimelineConnector,
   TimelineContent,
@@ -12,7 +13,7 @@ import Typography from '@mui/material/Typography'
 export interface TimelineBullet {
   title: string
   detail: string
-  icon(): EmotionJSX.Element
+  icon(): React.ReactElement
 }
 
 export const TimelineItemWithIcon = ({
@@ -25,13 +26,10 @@ export const TimelineItemWithIcon = ({
   return (
     <TimelineItem>
       <TimelineOppositeContent
-        variant="h5"
         color="text.secondary"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
+        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
-        {bullet.title}
+        <Typography variant="h5">{bullet.title}</Typography>
       </TimelineOppositeContent>
       <TimelineSeparator>
         <TimelineDot color="secondary">

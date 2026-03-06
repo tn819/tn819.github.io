@@ -1,12 +1,13 @@
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
-import { NextPage } from 'next'
 import { useEffect } from 'react'
 
 import Copyright from './Copyright'
 import NavBar from './NavBar'
 import Spacer from './Spacer'
+
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import { NextPage } from 'next'
 
 const Page: NextPage<{
   title: string

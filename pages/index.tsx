@@ -1,10 +1,10 @@
+import { Page, TechCard } from '../src/components'
+
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 import LinkIcon from '@mui/icons-material/Link'
 import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import { openPopupWidget } from 'react-calendly'
-
-import { Page, TechCard } from '../src/components'
 
 const Home: NextPage = () => {
   const handleCalendlyClick = () =>

@@ -1,3 +1,5 @@
+import { Page, TimelineItemWithIcon, TimelineBullet } from '../src/components'
+
 import { SchoolOutlined } from '@mui/icons-material'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff'
@@ -8,8 +10,6 @@ import SmartToyOutlinedIcon from '@mui/icons-material/SmartToyOutlined'
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline'
 import { Timeline } from '@mui/lab'
 import type { NextPage } from 'next'
-
-import { Page, TimelineItemWithIcon, TimelineBullet } from '../src/components'
 
 export const TimelineBullets: TimelineBullet[] = [
   {
@@ -36,6 +36,7 @@ Statistics, graduating Phi Beta Kappa.`,
     icon: () => <WorkOutlineIcon />,
   },
 ]
+
 export const PersonalBullets: TimelineBullet[] = [
   {
     title: 'On the side',
@@ -68,15 +69,15 @@ export const PersonalBullets: TimelineBullet[] = [
     icon: () => <ForestIcon />,
   },
   {
-    title: 'Today',
-    detail: `I am now exploring a new domain as part of a small full-stack team at DeepL supporting our Research team, where my job will be building apps that enable new inputs to improve our best-in-class translation models`,
+    title: 'AI & DeepL',
+    detail: `I am now building a horizontal browser use agent at DeepL - an AI-powered tool that brings automation capabilities to everyone at the company. This involves designing agentic systems, building browser automation infrastructure, and creating interfaces that make AI accessible to all employees across the organization.`,
     icon: () => <SmartToyOutlinedIcon />,
   },
 ]
 
 const About: NextPage = () => {
   return (
-    <Page title="Thomas Neil">
+    <Page title="About" description="From Political Science to AI Engineering">
       <Timeline position="alternate">
         {TimelineBullets.concat(...PersonalBullets)
           .reverse()

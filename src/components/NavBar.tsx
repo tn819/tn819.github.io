@@ -1,3 +1,5 @@
+import { useDarkMode } from '../DarkModeContext'
+
 import LightbulbIcon from '@mui/icons-material/Lightbulb'
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined'
 import AppBar from '@mui/material/AppBar'
@@ -8,7 +10,6 @@ import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import { useDarkMode } from '../DarkModeContext'
 
 const pages = [
   { href: '/', label: 'home' },

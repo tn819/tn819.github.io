@@ -1,14 +1,7 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Card,
-  Grid,
-  Tooltip,
-  Typography,
-} from '@mui/material'
-import Image from 'next/image'
-
 import { Spacer } from '.'
+
+import { Avatar, AvatarGroup, Card, Tooltip, Typography } from '@mui/material'
+import Image from 'next/image'
 
 type TechItemAvatarProps = { alt: string; path: string }
 

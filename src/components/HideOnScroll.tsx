@@ -1,6 +1,7 @@
+import { JSXElementConstructor } from 'react'
+
 import Slide from '@mui/material/Slide'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
-import { JSXElementConstructor } from 'react'
 
 interface Props {
   children: React.ReactElement<unknown, string | JSXElementConstructor<unknown>>

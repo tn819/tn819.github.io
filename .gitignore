@@ -4,6 +4,15 @@
 /node_modules
 /.pnp
 .pnp.js
+.pnp.cjs
+.pnp.loader.mjs
+
+# package manager lock files (project uses yarn)
+package-lock.json
+
+# yarn berry
+.yarn/install-state.gz
+.yarn/unplugged
 
 # testing
 /coverage
