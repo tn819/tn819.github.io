@@ -339,7 +339,7 @@ const ArticlesIndex: NextPage = () => {
 
   return (
     <Page
-      title="ARTICLES"
+      title=""
       description="High signal writing on AI, engineering, and building"
     >
       <Box sx={{ width: '100%', maxWidth: '900px' }}>
