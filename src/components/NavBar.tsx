@@ -12,7 +12,6 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
 const pages = [
-  { href: '/', label: 'home' },
   { href: '/about', label: 'about' },
   { href: '/blog', label: 'blog' },
   { href: '/articles', label: 'articles' },
@@ -66,10 +65,17 @@ const NavBar = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <Typography
             variant="h6"
+            component="a"
+            href="/"
             sx={{
               fontWeight: 400,
               letterSpacing: '0.1em',
               color: 'primary.main',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              '&:hover': {
+                opacity: 0.8,
+              },
             }}
           >
             THOMAS NEIL
