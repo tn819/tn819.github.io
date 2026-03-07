@@ -5,7 +5,7 @@ const tsParser = require('@typescript-eslint/parser')
 const prettier = require('eslint-config-prettier')
 
 module.exports = [
-  { ignores: ['eslint.config.js', '.omo/skills/**'] },
+  { ignores: ['eslint.config.js'] },
   ...nextConfig,
   ...tsPlugin.configs['flat/recommended'],
   prettier,
