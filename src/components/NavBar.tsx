@@ -68,10 +68,13 @@ const NavBar = () => {
           px: { xs: 2, sm: 4, md: 6 },
           display: 'flex',
           justifyContent: 'space-between',
-          minHeight: '64px',
+          minHeight: { xs: '56px', sm: '64px' },
+          flexWrap: 'nowrap',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', gap: { xs: 2, sm: 4 } }}
+        >
           <Typography
             variant="h6"
             component="a"
@@ -82,6 +85,8 @@ const NavBar = () => {
               color: 'primary.main',
               textDecoration: 'none',
               cursor: 'pointer',
+              fontSize: { xs: '1rem', sm: '1.25rem' },
+              whiteSpace: 'nowrap',
               '&:hover': {
                 opacity: 0.8,
               },
@@ -90,18 +95,22 @@ const NavBar = () => {
             THOMAS NEIL
           </Typography>
 
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 } }}>
             {pages.map(({ href, label }) => {
               const active = isActive(href)
               return (
                 <Button
                   key={href}
                   href={href}
+                  size="small"
                   sx={{
                     color: active ? 'primary.main' : 'text.secondary',
                     fontWeight: active ? 600 : 400,
-                    letterSpacing: '0.1em',
-                    fontSize: '0.8rem',
+                    letterSpacing: '0.05em',
+                    fontSize: { xs: '0.75rem', sm: '0.8rem' },
+                    minWidth: 'auto',
+                    px: { xs: 0.75, sm: 2 },
+                    py: { xs: 0.5, sm: 1 },
                     position: 'relative',
                     '&:hover': {
                       color: 'primary.main',
@@ -110,10 +119,10 @@ const NavBar = () => {
                       ? {
                           content: '""',
                           position: 'absolute',
-                          bottom: 4,
+                          bottom: 2,
                           left: '50%',
                           transform: 'translateX(-50%)',
-                          width: '60%',
+                          width: '50%',
                           height: 2,
                           bgcolor: 'primary.main',
                           borderRadius: 1,
@@ -128,14 +137,56 @@ const NavBar = () => {
           </Box>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          {socialLinks.map(({ href, label, icon }) => (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: { xs: 0.25, sm: 2 },
+          }}
+        >
+          {socialLinks.slice(0, 2).map(({ href, label, icon }) => (
+            <Tooltip key={href} title={label}>
+              <IconButton
+                size="small"
+                sx={{
+                  p: { xs: 0.25, sm: 0.5 },
+                  color: 'text.secondary',
+                  '&:hover': {
+                    color: 'primary.main',
+                  },
+                }}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+              >
+                <Avatar
+                  alt={label}
+                  src={icon}
+                  sx={{
+                    width: { xs: 22, sm: 28 },
+                    height: { xs: 22, sm: 28 },
+                    bgcolor: '#E0E0E0',
+                    p: 0.5,
+                    borderRadius: 1,
+                    '& img': {
+                      objectFit: 'contain',
+                    },
+                  }}
+                  variant="square"
+                />
+              </IconButton>
+            </Tooltip>
+          ))}
+
+          {socialLinks.slice(2).map(({ href, label, icon }) => (
             <Tooltip key={href} title={label}>
               <IconButton
                 size="small"
                 sx={{
                   p: 0.5,
                   color: 'text.secondary',
+                  display: { xs: 'none', sm: 'flex' },
                   '&:hover': {
                     color: 'primary.main',
                   },
@@ -169,7 +220,7 @@ const NavBar = () => {
               size="small"
               onClick={toggleDarkMode}
               sx={{
-                ml: 2,
+                ml: { xs: 0.25, sm: 2 },
                 color: darkMode ? 'warning.main' : 'text.secondary',
                 '&:hover': {
                   color: 'warning.main',
@@ -177,9 +228,9 @@ const NavBar = () => {
               }}
             >
               {darkMode ? (
-                <LightbulbIcon sx={{ fontSize: 22 }} />
+                <LightbulbIcon sx={{ fontSize: { xs: 18, sm: 22 } }} />
               ) : (
-                <LightbulbOutlinedIcon sx={{ fontSize: 22 }} />
+                <LightbulbOutlinedIcon sx={{ fontSize: { xs: 18, sm: 22 } }} />
               )}
             </IconButton>
           </Tooltip>
