@@ -43,7 +43,7 @@ export function getAllArticles(): Article[] {
         tags: data.tags || [],
         comment: data.comment || '',
         date: data.date ? String(data.date) : '',
-        published: data.published || false,
+        published: data.published === true,
         content,
       }
     })

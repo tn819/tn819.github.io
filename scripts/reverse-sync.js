@@ -221,7 +221,7 @@ const articles = [
   },
 ]
 
-const VAULT_INBOX = path.join(process.env.HOME, 'vault/000 Inbox')
+const VAULT_INBOX = path.join(process.env.HOME, 'vault/300 Articles')
 
 if (!fs.existsSync(VAULT_INBOX)) {
   console.log('Creating inbox directory...')
@@ -240,14 +240,14 @@ articles.forEach((article) => {
   const filePath = path.join(VAULT_INBOX, fileName)
 
   const fileContent = `---
-title: "${article.title}"
-author: "${article.author}"
-source: "${article.source}"
-url: "${article.url}"
-description: "${article.description}"
+title: ${JSON.stringify(article.title)}
+author: ${JSON.stringify(article.author)}
+source: ${JSON.stringify(article.source)}
+url: ${JSON.stringify(article.url)}
+description: ${JSON.stringify(article.description)}
 tags: ${JSON.stringify(article.tags)}
-comment: "${article.comment}"
-date: "${article.date}"
+comment: ${JSON.stringify(article.comment)}
+date: ${JSON.stringify(article.date)}
 published: true
 ---
 
