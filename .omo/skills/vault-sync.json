@@ -1,0 +1,9 @@
+{
+  "name": "vault-sync",
+  "description": "Syncs blog posts and articles from Obsidian vault to the website repo. Blog posts from /vault/999 Blog/ go to /content/blog/, Articles from /vault/300 Articles/ go to /content/articles/ (for external links). Only processes files with published: true in frontmatter.",
+  "version": "1.0.0",
+  "command": "node .omo/skills/vault-sync.js",
+  "triggers": ["sync vault", "publish blog", "sync articles", "update content"],
+  "inputs": [],
+  "outputs": ["Synced blog posts", "Synced articles"]
+}

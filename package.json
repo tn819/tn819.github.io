@@ -12,7 +12,8 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --config .prettierrc.json '**/*.ts' --write",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "sync:vault": "node .omo/skills/vault-sync.js"
   },
   "dependencies": {
     "@emotion/cache": "11.14.0",

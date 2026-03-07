@@ -1,0 +1,308 @@
+---
+title: 'Complete GTD Setup Guide: From Chaos to Clarity'
+description: A practical guide to implementing Getting Things Done methodology in Obsidian
+date: 2025-03-07T00:00:00.000Z
+tags:
+  - Productivity
+  - GTD
+  - Obsidian
+  - Systems
+published: true
+summary: >-
+  After experimenting with countless productivity systems, I keep returning to
+  David Allen's GTD methodology. Here's my complete setup for achieving
+  stress-free productivity.
+comment: >-
+  GTD isn't about being a productivity robot—it's about creating mental space
+  for what matters.
+---
+
+# Building a GTD System in Obsidian: From Zero to Productivity
+
+**Date:** March 2026  
+**Context:** This guide documents the complete setup of a GTD (Getting Things Done) system in Obsidian, including capture workflows from Telegram and browser, PARA organization, and habit formation. The system is designed to work without external subscriptions and can be replicated by anyone.
+
+---
+
+## Table of Contents
+
+1. [The Philosophy](#the-philosophy)
+2. [Final Folder Structure](#final-folder-structure)
+3. [Complete Setup Guide](#complete-setup-guide)
+4. [Daily Operations](#daily-operations)
+5. [Templates Reference](#templates-reference)
+6. [Key Decisions & Trade-offs](#key-decisions--trade-offs)
+
+---
+
+## The Philosophy
+
+This GTD system follows several core principles:
+
+1. **Capture ≠ Process** — These are separate modes. Never process while capturing.
+2. **One next action per project** — Every active project must have exactly ONE visible next step
+3. **Weekly Review is sacred** — Skip it and the system dies
+4. **Areas are standards, not tasks** — Ongoing responsibilities use standards reviewed weekly, not daily checkbox tasks
+5. **Archive ruthlessly** — If you haven't touched it in 2 weeks and it's not important, archive it
+
+The system uses PARA (Projects, Areas, Resources, Archive) with GTD workflows:
+- **Projects** (`/100 Projects/`) — Things with end dates
+- **Areas** (`/200 Areas/`) — Ongoing responsibilities with standards
+- **Resources** (`/400 Resources/`) — Reference material
+- **Archive** (`/500 Archive/`) — Completed/cancelled items
+
+---
+
+## Final Folder Structure
+
+```
+vault/
+│
+├── 📥 000 Inbox/
+│   └── Inbox.md                          # Capture inbox for tasks
+│
+├── 📁 100 Projects/                      # Active projects with end dates
+│   ├── GTD System Setup.md
+│   ├── Establish Personal Brand.md
+│   └── Process Articles Queue.md
+│
+├── 🏠 200 Areas/                         # Ongoing responsibilities (standards)
+│   ├── Career Growth/
+│   │   └── Standard.md                   # What "good" looks like
+│   ├── Health & Fitness/
+│   │   └── Standard.md
+│   └── Finances/
+│       └── Standard.md
+│
+├── 📰 300 Articles/                      # External content with my commentary
+│   ├── Effective Engineer.md
+│   └── High Output Management.md
+│
+├── 📚 400 Resources/                     # Reference material
+│   ├── Berlin/
+│   │   └── Apartment Hunting Guide.md
+│   └── Tech/
+│       └── AI Engineering Resources.md
+│
+└── 🗃️ 500 Archive/                      # Completed/cancelled items
+    ├── 2025/
+    └── 2026/
+```
+
+---
+
+## Complete Setup Guide
+
+### Step 1: Install Required Plugins
+
+**Essential:**
+- **Dataview** — For dynamic queries and "next action" views
+- **Templater** — For daily notes and project templates
+- **QuickAdd** — For rapid capture workflows
+- **Tag Wrangler** — For tag management
+- **Obsidian Git** — For version control (optional but recommended)
+
+**Recommended:**
+- **Calendar** — Visual navigation of daily notes
+- **Periodic Notes** — Enhanced daily/weekly note management
+- **Homepage** — Custom dashboard
+
+### Step 2: Create Core Templates
+
+Create a folder `/Templates/` with these files:
+
+**Project Template** (`Templates/Project.md`):
+```markdown
+---
+tags: [project]
+status: active
+created: {{date:YYYY-MM-DD}}
+---
+
+# {{title}}
+
+**Status:** {{status}}
+**Created:** {{created}}
+
+## Outcome
+What does "done" look like?
+
+## Next Action
+{{next_action}}
+
+## Notes
+```
+
+**Daily Note Template** (`Templates/Daily.md`):
+```markdown
+---
+date: {{date:YYYY-MM-DD}}
+day: {{date:dddd}}
+---
+
+# {{date:YYYY-MM-DD}} {{date:dddd}}
+
+## 🎯 Priority
+1. 
+
+## ✅ Completed
+- [ ] 
+
+## 📝 Notes
+
+## 🔗 Links
+```
+
+### Step 3: Set Up Inbox Capture
+
+The inbox is sacred. Everything starts here before processing.
+
+**Configure QuickAdd:**
+1. Settings → QuickAdd
+2. Create "Capture to Inbox":
+   - Type: Capture
+   - File: `000 Inbox/Inbox.md`
+   - Format: `- [ ] {{DATE:HH:mm}} {{VALUE}}`
+   - Hotkey: `Ctrl/Cmd + Shift + I`
+
+**Mobile Capture (Telegram Bot):**  
+Create a Telegram bot using BotFather, then:
+1. Create a simple webhook/cloud function that appends to your inbox
+2. Or use the Obsidian mobile app with quick capture widget
+
+### Step 4: Create Views with Dataview
+
+**Next Actions Dashboard** (`GTD Dashboard.md`):
+```dataview
+table project, next_action
+from #project 
+where status = "active"
+sort priority desc
+```
+
+**Today's Context** (`Today.md`):
+```dataview
+task
+from ""
+where !completed and due = date(today)
+```
+
+### Step 5: Weekly Review Template
+
+Create `/Templates/Weekly Review.md`:
+
+```markdown
+# Weekly Review: {{date:YYYY-MM-DD}}
+
+## 1. Get Clear (Process Inbox)
+- [ ] Process 000 Inbox to zero
+- [ ] Process Telegram capture
+- [ ] Process browser bookmarks/clippings
+
+## 2. Get Current (Review Lists)
+- [ ] Review calendar (past & upcoming week)
+- [ ] Review Projects list — every project has a next action?
+- [ ] Review Next Actions — anything stale?
+- [ ] Review Waiting For — any follow-ups needed?
+- [ ] Review Areas standards — anything off track?
+
+## 3. Get Creative (Clear Mind)
+- [ ] Review Someday/Maybe — anything ready to activate?
+- [ ] Brain dump: What's on my mind that's not captured?
+- [ ] Review goals/vision — am I aligned?
+
+## Decisions
+- Projects to activate:
+- Projects to archive:
+- New standards needed:
+```
+
+---
+
+## Daily Operations
+
+### Morning Routine (5 minutes)
+1. Open Daily Note
+2. Check calendar for hard commitments
+3. Review Next Actions — what 1-3 things MUST happen today?
+4. Capture any overnight thoughts to inbox
+
+### Capture Throughout Day
+- **Immediate**: Use QuickAdd hotkey (`Ctrl/Cmd + Shift + I`)
+- **Mobile**: Telegram bot or Obsidian mobile quick action
+- **Browser**: Use Obsidian Web Clipper or send to Telegram
+
+### Evening Routine (5 minutes)
+1. Mark completed tasks
+2. Move unfinished critical tasks to tomorrow
+3. Quick brain dump of tomorrow's thoughts
+4. Check inbox count (should be 0 or processing soon)
+
+### Weekly Review (60 minutes, same time every week)
+**Mine:** Sundays at 18:00 with coffee, no distractions.
+
+Use the Weekly Review template. This is non-negotiable. Skip it and the system dies within 2 weeks.
+
+---
+
+## Templates Reference
+
+### Project Template
+- Status: active/completed/cancelled
+- Clear outcome statement
+- One next action always visible
+- Review date for active projects
+
+### Area Standard Template
+- What "good" looks like
+- Current state
+- Gap analysis
+- Review frequency (weekly for most)
+
+### Article Template
+- Source link
+- My commentary/insight
+- Tags for retrieval
+- Action items if applicable
+
+---
+
+## Key Decisions & Trade-offs
+
+### Why PARA + GTD instead of pure PARA?
+Pure PARA lacks the "next action" clarity. Projects accumulate without clear progress. GTD's runway-level focus (next physical action) ensures momentum.
+
+### Why separate capture inbox instead of direct-to-location?
+Capture must be frictionless. Deciding where something goes requires thinking. Thinking creates friction. Friction means you won't capture. Process later, not during capture.
+
+### Why standards for Areas instead of recurring tasks?
+"Exercise 3x/week" is a guilt-producing checkbox. "Maintain baseline fitness" is a standard you review weekly. The standard creates the right mindset: maintenance, not achievement.
+
+### Why Obsidian instead of Todoist/Things/etc?
+- **Data ownership**: My notes are plain text files
+- **Flexibility**: I can query, link, and restructure however I want
+- **Cost**: One-time purchase vs subscription
+- **Longevity**: Plain text will be readable in 20 years
+
+**Trade-off**: More setup time, less "it just works" polish. Worth it for the control.
+
+---
+
+## Success Metrics
+
+After 30 days, you should:
+- [ ] Inbox hits zero at least 5x/week
+- [ ] Weekly Review happens every week without fail
+- [ ] Every active project has a visible next action
+- [ ] You trust the system (not keeping mental backup lists)
+- [ ] Reduced anxiety about forgetting things
+
+After 90 days:
+- [ ] System is habit, not effort
+- [ ] You're finishing projects that used to stall
+- [ ] Clear mind during focused work
+- [ ] Better work-life balance through clearer boundaries
+
+---
+
+**Remember**: The system serves you, not vice versa. Adapt ruthlessly. But give it 30 days of honest use before declaring it doesn't work.
