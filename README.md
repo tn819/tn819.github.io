@@ -1,6 +1,6 @@
 # Thomas Neil personal site
 
-[Check it out live](https://tn819-github-io.vercel.app/)
+[Check it out live](https://thomas-neil.vercel.app/)
 
 ## How to use
 
