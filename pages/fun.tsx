@@ -12,7 +12,6 @@ import {
   Grid,
   Skeleton,
   Typography,
-  Avatar,
 } from '@mui/material'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
@@ -117,40 +116,21 @@ const FunPage: NextPage = () => {
               Recently watched and rated
             </Typography>
           </Box>
-          <Box
+          <Button
+            variant="outlined"
+            size="small"
+            href="https://letterboxd.com/tommylvberlin"
+            target="_blank"
+            rel="noopener noreferrer"
+            endIcon={<OpenInNewIcon />}
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-              width: { xs: '100%', sm: 'auto' },
+              textTransform: 'none',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >
-            <Avatar
-              src="/images/social/letterboxd.svg"
-              alt="Letterboxd"
-              sx={{
-                width: 32,
-                height: 32,
-                bgcolor: 'transparent',
-                '& img': { objectFit: 'contain' },
-              }}
-            />
-            <Button
-              variant="contained"
-              size="small"
-              href="https://letterboxd.com/tommylvberlin"
-              target="_blank"
-              rel="noopener noreferrer"
-              endIcon={<OpenInNewIcon />}
-              sx={{
-                textTransform: 'none',
-                bgcolor: '#FF8000',
-                '&:hover': { bgcolor: '#E67300' },
-              }}
-            >
-              Follow on Letterboxd
-            </Button>
-          </Box>
+            Follow on Letterboxd
+          </Button>
         </Box>
 
         {/* Movies Grid */}
@@ -159,11 +139,20 @@ const FunPage: NextPage = () => {
             <Grid container spacing={3}>
               {[...Array(6)].map((_, i) => (
                 <Grid key={i} size={{ xs: 6, sm: 4, md: 2 }}>
-                  <Skeleton
-                    variant="rectangular"
-                    sx={{ aspectRatio: '2/3', borderRadius: 1 }}
-                  />
-                  <Skeleton variant="text" sx={{ mt: 1 }} width="80%" />
+                  <Box sx={{ height: '100%' }}>
+                    <Skeleton
+                      variant="rectangular"
+                      sx={{
+                        width: '100%',
+                        aspectRatio: '2/3',
+                        borderRadius: 1,
+                        mb: 1.5,
+                        minHeight: { xs: 180, sm: 220, md: 260 },
+                      }}
+                    />
+                    <Skeleton variant="text" width="95%" sx={{ mb: 0.5 }} />
+                    <Skeleton variant="text" width="60%" />
+                  </Box>
                 </Grid>
               ))}
             </Grid>
@@ -278,51 +267,66 @@ const FunPage: NextPage = () => {
               Currently reading and recently finished
             </Typography>
           </Box>
-          <Box
+          <Button
+            variant="outlined"
+            size="small"
+            href="https://www.goodreads.com/user/show/96474981"
+            target="_blank"
+            rel="noopener noreferrer"
+            endIcon={<OpenInNewIcon />}
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-              width: { xs: '100%', sm: 'auto' },
+              textTransform: 'none',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >
-            <Avatar
-              src="/images/social/goodreads.svg"
-              alt="Goodreads"
-              sx={{
-                width: 32,
-                height: 32,
-                bgcolor: 'transparent',
-                '& img': { objectFit: 'contain' },
-              }}
-            />
-            <Button
-              variant="contained"
-              size="small"
-              href="https://www.goodreads.com/user/show/96474981"
-              target="_blank"
-              rel="noopener noreferrer"
-              endIcon={<OpenInNewIcon />}
-              sx={{
-                textTransform: 'none',
-                bgcolor: '#553B08',
-                '&:hover': { bgcolor: '#3D2A05' },
-              }}
-            >
-              Connect on Goodreads
-            </Button>
-          </Box>
+            Connect on Goodreads
+          </Button>
         </Box>
 
         {/* Books Grid */}
         <Box sx={{ width: '100%' }}>
-          <Grid container spacing={3}>
-            {books.map((book) => (
-              <Grid key={book.link} size={{ xs: 12, sm: 6, md: 4 }}>
-                <BookCard book={book} />
-              </Grid>
-            ))}
-          </Grid>
+          {loading ? (
+            <Grid container spacing={3}>
+              {[...Array(4)].map((_, i) => (
+                <Grid key={i} size={{ xs: 12, sm: 6, md: 4 }}>
+                  <Box sx={{ display: 'flex', gap: 2, height: '100%' }}>
+                    <Skeleton
+                      variant="rectangular"
+                      width={100}
+                      height={150}
+                      sx={{ borderRadius: 1, flexShrink: 0 }}
+                    />
+                    <Box
+                      sx={{
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        pt: 1,
+                      }}
+                    >
+                      <Skeleton variant="text" width="95%" sx={{ mb: 1 }} />
+                      <Skeleton variant="text" width="70%" sx={{ mb: 2 }} />
+                      <Skeleton
+                        variant="rounded"
+                        width={60}
+                        height={24}
+                        sx={{ mt: 'auto' }}
+                      />
+                    </Box>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            <Grid container spacing={3}>
+              {books.map((book) => (
+                <Grid key={book.link} size={{ xs: 12, sm: 6, md: 4 }}>
+                  <BookCard book={book} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Box>
       </Box>
     </Page>
@@ -403,12 +407,13 @@ function BookCard({ book }: { book: GoodreadsBook }) {
                 color: '#fff',
                 fontWeight: 600,
                 fontSize: '0.7rem',
-                mb: book.averageRating ? 1 : 0,
               }}
             />
           )}
 
-          {book.averageRating && <StarRating rating={book.averageRating} />}
+          {book.shelf === 'read' && book.userRating && (
+            <StarRating rating={book.userRating} />
+          )}
         </Box>
       </CardContent>
     </Card>
