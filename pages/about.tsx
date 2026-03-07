@@ -1,130 +1,74 @@
-import { Page, TimelineItemWithIcon, TimelineBullet } from '../src/components'
+import { Page } from '../src/components'
+import {
+  InteractiveTimeline,
+  TimelineItemData,
+} from '../src/components/InteractiveTimeline'
 
-import DownloadIcon from '@mui/icons-material/Download'
-import { SchoolOutlined } from '@mui/icons-material'
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
-import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff'
-import ForestIcon from '@mui/icons-material/Forest'
-import HomeIcon from '@mui/icons-material/Home'
-import PeopleIcon from '@mui/icons-material/People'
-import SmartToyOutlinedIcon from '@mui/icons-material/SmartToyOutlined'
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline'
-import { IconButton, Tooltip } from '@mui/material'
-import { Timeline } from '@mui/lab'
 import type { NextPage } from 'next'
 
-export const TimelineBullets: TimelineBullet[] = [
+const timelineItems: TimelineItemData[] = [
   {
-    title: 'Childhood',
-    detail: `I grew up across the USA. I went to high school in the unique and
-diverse city of Shaker Heights, Ohio near Cleveland and then left to
-attend an international boarding school in New Mexico at the United
-World College.`,
-    icon: () => <HomeIcon />,
+    id: 'childhood',
+    title: 'Nomadic Beginnings',
+    detail: `I grew up across the USA — Ohio, Oregon, Michigan, Massachusetts, Ohio again, New Mexico, Iowa, Illinois, Texas. I went to high school in the unique and diverse city of Shaker Heights, Ohio near Cleveland and then left to attend an international boarding school in New Mexico at the United World College. I didn't get to adjust myself to a bed or apartment for more than a couple years until after 30.`,
+    iconType: 'us-map',
+    color: '#FF6B6B',
   },
   {
-    title: 'Education',
-    detail: `I studied at Grinnell College in Iowa. I
-majored in Political Science with coursework in Arabic, German, and
-Statistics, graduating Phi Beta Kappa.`,
-    icon: () => <SchoolOutlined />,
+    id: 'education',
+    title: 'Grinnell College',
+    detail: `I studied at Grinnell College in Iowa. I majored in Political Science with coursework in Arabic, German, and Statistics, graduating Phi Beta Kappa.`,
+    iconType: 'books',
+    color: '#4ECDC4',
   },
   {
-    title: 'Early career',
-    detail: `I started out at the Morningstar Development Program and transitioned into a
-    technical solutions role at an AI startup in Chicago,
-    Narrative Science. Although I gained financial literacy, client relation and technical skills, I still felt the
-    urge to build and move Above the API.`,
-    icon: () => <WorkOutlineIcon />,
-  },
-]
-
-export const PersonalBullets: TimelineBullet[] = [
-  {
-    title: 'On the side',
-    detail: `While in Chicago, I founded an events/activations company called
-    the Mobocratic Republic aka the Mob Rep. Starting from elaborate
-    pop-up cook-outs, we grew to throwing 30-600 person
-    cultural events with brands like Cresco
-    Labs, Moet-Hennessy and Lululemon. It was an unforgettable
-    series of experiences to organize, with bonds that
-    last to this day.`,
-    icon: () => <PeopleIcon />,
+    id: 'early-career',
+    title: 'Morningstar & Narrative Science',
+    detail: `I started out at the Morningstar Development Program and transitioned into a technical solutions role at an AI startup in Chicago, Narrative Science. Although I gained financial literacy, client relation and technical skills, I still felt the urge to build and move Above the API.`,
+    iconType: 'laptop',
+    color: '#45B7D1',
   },
   {
-    title: 'Berlin',
-    detail: `I followed my growing passion towards fintech and coding to a
-    bootcamp in Berlin, where my grandmother was from and a city I had
-    been drawn to due to its progressive and open stance. I gave myself
-    a year to immerse fully in coding and make a transition to
-    being a full-time web developer.`,
-    icon: () => <FlightTakeoffIcon />,
+    id: 'mob-rep',
+    title: 'The Mobocratic Republic',
+    detail: `While in Chicago, I founded an events/activations company called the Mobocratic Republic aka the Mob Rep. Starting from elaborate pop-up cook-outs, we grew to throwing 30-600 person cultural events with brands like Cresco Labs, Moet-Hennessy and Lululemon. It was an unforgettable series of experiences to organize, with bonds that last to this day.`,
+    imageUrl: '/images/mob-rep.jpg',
+    color: '#96CEB4',
   },
   {
-    title: 'Fintech',
-    detail: `I've held a couple different full stack roles at first working for BCG Platinion Design & Engineering team and then moving to Klarna. At Klarna, I was the second dev on the team that built our first live banking product, the Savings Account. I was promoted to Senior and had the change to work on our launches in Sweden and Germany, becoming one of both countries' leading savings products. I also worked on a team supporting the Klarna Card.`,
-    icon: () => <AccountBalanceIcon />,
+    id: 'berlin',
+    title: 'Berlin Bound',
+    detail: `I followed my growing passion towards fintech and coding to a bootcamp in Berlin, where my grandmother was from and a city I had been drawn to due to its progressive and open stance. I gave myself a year to immerse fully in coding and make a transition to being a full-time web developer.`,
+    imageUrl: '/images/timeline/berlin-arrival.jpeg',
+    color: '#FFEAA7',
   },
   {
-    title: 'Climate Tech',
+    id: 'fintech',
+    title: 'BCG Platinion & Klarna',
+    detail: `I've held a couple different full stack roles at first working for BCG Platinion Design & Engineering team and then moving to Klarna. At Klarna, I was the second dev on the team that built our first live banking product, the Savings Account. I was promoted to Senior and had the chance to work on our launches in Sweden and Germany, becoming one of both countries' leading savings products.`,
+    imageUrl: '/images/timeline/klarna.jpeg',
+    color: '#DDA0DD',
+  },
+  {
+    id: 'climate',
+    title: 'Blue Layer - Climate Tech',
     detail: `I had the chance to be the founding engineer at Blue Layer, building an operating system for developers in the carbon markets. With involvement from the first days of our engineering team, I had the chance to support building basic infra and many features in our app along with services to attract and support our first customers.`,
-    icon: () => <ForestIcon />,
+    imageUrl: '/images/timeline/bluelayer.jpeg',
+    color: '#98D8C8',
   },
   {
-    title: 'AI & DeepL',
+    id: 'deepl',
+    title: 'DeepL & AI Agents',
     detail: `I am now building a horizontal browser use agent at DeepL - an AI-powered tool that brings automation capabilities to everyone at the company. This involves designing agentic systems, building browser automation infrastructure, and creating interfaces that make AI accessible to all employees across the organization.`,
-    icon: () => <SmartToyOutlinedIcon />,
+    imageUrl: '/images/timeline/deepl.jpeg',
+    color: '#6366F1',
   },
 ]
 
 const About: NextPage = () => {
-  const downloadMarkdown = () => {
-    const allBullets = [...TimelineBullets, ...PersonalBullets]
-    const markdown = `# About Thomas Neil
-
-From Political Science to AI Engineering — a varied path across languages, industries, and technologies.
-
-## Background
-
-${allBullets.map((b) => `### ${b.title}\n\n${b.detail.trim()}`).join('\n\n')}
-
----
-
-*Downloaded from thomasneil.com — AI-ready format*
-`
-    const blob = new Blob([markdown], { type: 'text/markdown' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'thomas-neil-about.md'
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-  }
-
   return (
-    <Page
-      title="Winding road through Arabic, German, software, now AI agents at DeepL in Berlin"
-      description="A varied path — Arabic & German, fintech & climate tech, now building AI agents at DeepL in Berlin"
-      action={
-        <Tooltip title="Download as Markdown (AI-ready)">
-          <IconButton
-            onClick={downloadMarkdown}
-            sx={{ color: 'text.secondary' }}
-          >
-            <DownloadIcon />
-          </IconButton>
-        </Tooltip>
-      }
-    >
-      <Timeline position="alternate">
-        {TimelineBullets.concat(...PersonalBullets)
-          .reverse()
-          .map((bullet) => (
-            <TimelineItemWithIcon key={bullet.title} bullet={bullet} />
-          ))}
-      </Timeline>
+    <Page title="Winding road through Arabic, German, software, now AI agents at DeepL in Berlin">
+      <InteractiveTimeline items={[...timelineItems].reverse()} />
     </Page>
   )
 }

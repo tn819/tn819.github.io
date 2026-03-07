@@ -5,3 +5,7 @@ export { default as Link } from './Link'
 export { default as Pic } from './Pic'
 export { default as TechCard } from './TechCard'
 export * from './TimelineBullet'
+export {
+  default as InteractiveTimeline,
+  type TimelineItemData,
+} from './InteractiveTimeline'

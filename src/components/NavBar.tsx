@@ -16,6 +16,7 @@ const pages = [
   { href: '/about', label: 'about' },
   { href: '/blog', label: 'blog' },
   { href: '/articles', label: 'articles' },
+  { href: '/fun', label: 'fun' },
 ]
 
 const socialLinks = [
