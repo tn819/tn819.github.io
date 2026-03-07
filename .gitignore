@@ -50,3 +50,4 @@ yarn-error.log*
 !public/images/**/*.png
 tmp/
 test-screenshots/
+dist/
