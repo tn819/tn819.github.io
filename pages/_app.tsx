@@ -38,6 +38,7 @@ export default function MyApp(props: MyAppProps) {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <title>Thomas Neil — AI Engineer & Builder ⚡</title>
       </Head>
       <DarkModeProvider>
         <AppContent Component={Component} pageProps={pageProps} />
