@@ -92,7 +92,18 @@ const NavBar = () => {
               },
             }}
           >
-            THOMAS NEIL
+            <Box
+              component="span"
+              sx={{ display: { xs: 'inline', sm: 'none' } }}
+            >
+              TN
+            </Box>
+            <Box
+              component="span"
+              sx={{ display: { xs: 'none', sm: 'inline' } }}
+            >
+              THOMAS NEIL
+            </Box>
           </Typography>
 
           <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 } }}>
@@ -184,9 +195,8 @@ const NavBar = () => {
               <IconButton
                 size="small"
                 sx={{
-                  p: 0.5,
+                  p: { xs: 0.25, sm: 0.5 },
                   color: 'text.secondary',
-                  display: { xs: 'none', sm: 'flex' },
                   '&:hover': {
                     color: 'primary.main',
                   },
@@ -200,8 +210,8 @@ const NavBar = () => {
                   alt={label}
                   src={icon}
                   sx={{
-                    width: 28,
-                    height: 28,
+                    width: { xs: 22, sm: 28 },
+                    height: { xs: 22, sm: 28 },
                     bgcolor: '#E0E0E0',
                     p: 0.5,
                     borderRadius: 1,
