@@ -13,7 +13,7 @@
     "lint": "next lint",
     "prettier": "prettier --config .prettierrc.json '**/*.ts' --write",
     "prepare": "husky install",
-    "sync:vault": "node .omo/skills/vault-sync.js"
+    "sync:vault": "node -e \"require(process.env.HOME + '/.agents/skills/vault-sync/vault-sync.js').main()\""
   },
   "dependencies": {
     "@emotion/cache": "11.14.0",
