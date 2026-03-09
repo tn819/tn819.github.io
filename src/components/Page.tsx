@@ -49,7 +49,7 @@ const Page: NextPage<{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              mb: description ? 2 : 0,
+              mb: 3,
             }}
           >
             {title && (

@@ -9,3 +9,4 @@ export {
   default as InteractiveTimeline,
   type TimelineItemData,
 } from './InteractiveTimeline'
+export { MDXComponents } from './MDXComponents'

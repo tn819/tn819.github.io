@@ -90,6 +90,13 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        html: {
+          scrollbarGutter: 'stable',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -206,6 +213,13 @@ export const darkTheme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        html: {
+          scrollbarGutter: 'stable',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
