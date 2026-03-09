@@ -18,7 +18,7 @@ interface BlogPostPageProps {
 export default function BlogPostPage({ post, mdxSource }: BlogPostPageProps) {
   return (
     <Page title={post.title} description={post.description}>
-      <Box sx={{ width: '100%', maxWidth: '800px', textAlign: 'left' }}>
+      <Box sx={{ width: '100%', maxWidth: '900px', textAlign: 'left' }}>
         {/* Tags */}
         <Box sx={{ mb: 3 }}>
           {post.tags.map((tag) => (

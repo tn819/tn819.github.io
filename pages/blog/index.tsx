@@ -107,12 +107,8 @@ export default function BlogIndex({ posts }: BlogIndexProps) {
     selectedTags.length > 0 || searchQuery.trim().length > 0
 
   return (
-    <Page title="Thoughts on AI, engineering, Berlin, life or whatever strikes my fancy">
-      <Box sx={{ width: '100%', maxWidth: '800px' }}>
-        <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
-          Blog
-        </Typography>
-
+    <Page title="Blog">
+      <Box sx={{ width: '100%', maxWidth: '900px' }}>
         {/* Search and Tags */}
         <Box sx={{ mb: 4 }}>
           <TextField

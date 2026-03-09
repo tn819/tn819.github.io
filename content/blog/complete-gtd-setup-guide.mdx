@@ -1,0 +1,543 @@
+---
+title: "Complete GTD Setup Guide"
+description: "Leveraging obsidian and plugins along with AI to build a GTD system"
+date: "2026-03-07"
+tags: [""]
+published: true
+summary: "Leveraging obsidian and plugins along with AI to build a GTD system"
+comment: ""
+---
+
+
+I spent a couple days setting up a GTD system in Obsidian. This was an experiment to get my process onto obsidian, update my site and effectiveness and re-introduce myself to the landscape of open coding tools while improving my system in the process. Here's what I learned.
+
+Productivity systems fail because they're too complicated. You spend more time managing the system than doing the work. I wanted something simple and AI-native. Something that would get out of the way (once this setup finishes ;))
+
+I think I got close.
+## Table of Contents
+
+1. [The Problem With Most GTD Setups](#The Problem With Most GTD Setups)
+2. [The Philosophy](#the-philosophy)
+3. [Final Folder Structure](#final-folder-structure)
+4. [Complete Setup Guide](#complete-setup-guide)
+5. [Daily Operations](#daily-operations)
+6. [Templates Reference](#templates-reference)
+7. [Key Decisions & Trade-offs](#key-decisions--trade-offs)
+
+---
+## The Problem With Most GTD Setups
+
+I've tried manual Notion, Apple Notes, or Google Tasks. I've tried paper notebooks. They all had the same flaw: they made me think about the system instead of the work.
+
+What I needed was something that would:
+1. Capture everything in under 5 seconds in all the places I work: phone 
+2. Show me only what matters today
+3. Force me to review weekly (or the system dies)
+4. Do the re-assembly work for EXCEPT for re-prioritizing
+5. Archive ruthlessly
+
+In the last few months, I have also realized they had a second flaw: they aren't AI-native.
+
+Obsidian with the right plugins does this. But it took some work to get there.
+
+## What I Built
+
+The system uses PARA (Projects, Areas, Resources, Archive) inside GTD workflows.
+
+**Projects** are things with end dates. "Launch feature X" or "File taxes." Each gets one note in `/100 Projects/`. One note. One next action. If you open a project and can't see what to do next, the system is broken.
+
+**Areas** are ongoing responsibilities. Health. Finances. Career. These never end, so they don't get checkboxes. They get standards. "Exercise 3x per week" is a standard I review in my Weekly Review. It's not a daily task that clutters my list. This distinction matters a lot.
+
+**Capture happens three ways:**
+- QuickAdd hotkey (`Cmd+Shift+A`) for desktop tasks
+- Telegram bot on my phone for links, files, thoughts
+- Web Clipper in the browser for full articles
+
+---
+## The Philosophy
+
+This GTD system follows several core principles:
+
+1. **Capture ≠ Process** — These are separate modes. Never process while capturing.
+2. **One next action per project** — Every active project must have exactly ONE visible next step
+3. **Weekly Review is sacred** — Skip it and the system dies
+4. **Areas are standards, not tasks** — Ongoing responsibilities use standards reviewed weekly, not daily checkbox tasks
+5. **Archive ruthlessly** — If you haven't touched it in 2 weeks and it's not important, archive it
+
+You can read more here: https://gettingthingsdone.com/what-is-gtd/
+
+The system uses PARA (Projects, Areas, Resources, Archive) with GTD workflows:
+- **Projects** (`/100 Projects/`) — Things with end dates
+- **Areas** (`/200 Areas/`) — Ongoing responsibilities with standards
+- **Resources** (`/400 Resources/`) — Reference material
+- **Archive** (`/500 Archive/`) — Completed/cancelled items
+
+---
+
+## Final Folder Structure
+
+```
+vault/
+│
+├── 📥 000 Inbox/
+│   └── Inbox.md                          # Capture inbox for tasks
+│
+├── 📁 100 Projects/                      # Active projects with end dates
+│   ├── GTD System Setup.md
+│   ├── Establish Personal Brand.md
+│   └── Process Articles Queue.md
+│
+├── 🏠 200 Areas/                         # Ongoing responsibilities (standards)
+│   ├── Career.md
+│   ├── DeepL Agent.md
+│   ├── Family & Social.md
+│   ├── Finances.md
+│   └── Health.md
+│
+├── 📚 300 Articles/                      # Reading queue
+│   └── [Captured articles]
+│
+├── 📎 400 Resources/                     # Files, PDFs, reference
+│   └── [Files and documents]
+│
+├── 🗄️ 500 Archive/
+│   ├── Projects/                         # Completed projects
+│   ├── Articles/                         # Read/archived articles
+│   └── Resources/                        # Old resources
+│
+├── 📝 Daily Notes/                       # Daily planning notes
+│   └── 2026-03-07.md
+│
+├── 📅 Weekly Reviews/                    # Weekly review history
+│   └── [Review notes]
+│
+├── 📋 Templates/
+│   ├── Daily Note.md
+│   ├── Daily Routine.md
+│   ├── Weekly Review.md
+│   ├── Project Note.md
+│   ├── Web Clipper Article.md
+│   └── Telegram Capture.md
+│
+├── 📖 Workflows/
+│   ├── Quick Capture Cheat Sheet.md
+│   ├── Weekly Rhythm.md
+│   └── Archive Maintenance.md
+│
+├── 🚀 Start Here.md                      # Quick reference
+└── 📖 Obsidian GTD Setup.md              # Complete setup guide
+```
+
+---
+
+## Complete Setup Guide  [GTD Setup Guide](/resources/gtd-setup-guide)
+
+<details>
+<summary><h3>Phase 1: Install Obsidian + Core Plugins (~1 hour)</h3></summary>
+
+#### 1.1 Install Obsidian
+
+1. Download from [obsidian.md](https://obsidian.md/)
+2. Create a new vault — name it e.g. `Second Brain`
+3. Choose a location you can find easily (e.g. `~/Documents/Second Brain`)
+
+#### 1.2 Enable Core Plugins
+
+Settings → Core Plugins → enable each:
+
+- Templates
+- Daily Notes
+- Backlinks
+- Tag Pane
+
+#### 1.3 Install Community Plugins
+
+Settings → Community Plugins → turn off Restricted Mode → Browse → install and enable each:
+
+| Plugin | Purpose |
+|--------|---------|
+| **Tasks** | GTD-aware task tracking with dates and priorities |
+| **Dataview** | Query engine powering your daily dashboard |
+| **Periodic Notes** | Daily and weekly note automation |
+| **QuickAdd** | Frictionless capture hotkey from anywhere |
+| **Calendar** | Date navigation sidebar |
+| **Telegram Sync** | Captures links, text, and files from Telegram into vault |
+| **Auto Card Link** | Converts bare URLs into rich card previews with title, description, image |
+| **Enhance YouTube Links** | Extracts video titles, thumbnails, and channel info from YouTube URLs |
+
+</details>
+
+<details>
+<summary><h3>Phase 2: Configure Automation Tools (~15 min)</h3></summary>
+
+Set up any desired automation tools or scripts to interact with your vault. This can include API integrations, command-line tools, or custom scripts that help manage your notes and tasks.
+
+</details>
+
+<details>
+<summary><h3>Phase 3: Scaffold the Vault Structure (~5 min)</h3></summary>
+
+Create the following folder structure and templates:
+
+**FOLDERS TO CREATE:**
+- 000 Inbox
+- 100 Projects
+- 200 Areas
+- 300 Articles
+- 400 Resources
+- 500 Archive
+- Templates
+- Daily Notes
+- Weekly Reviews
+
+**FILES TO CREATE:**
+
+See [Templates Reference](#templates-reference) section for complete template content.
+
+</details>
+
+<details>
+<summary><h3>Phase 4: Configure Community Plugins (~1 hour)</h3></summary>
+
+#### 4.1 Periodic Notes
+
+Settings → Periodic Notes → Daily Notes:
+
+- **Format:** `YYYY-MM-DD`
+- **Template file:** `Templates/Daily Note`
+- **New file location:** `Daily Notes`
+
+Settings → Periodic Notes → Weekly Notes:
+
+- **Format:** `YYYY-[W]WW`
+- **Template file:** `Templates/Weekly Review`
+- **New file location:** `Weekly Reviews`
+
+#### 4.2 Tasks Plugin
+
+No config needed. Learn the syntax:
+
+```markdown
+- [ ] Task name ⏫ 📅 2026-03-10
+```
+
+| Symbol | Meaning |
+|--------|---------|
+| `⏫` | High priority |
+| `🔼` | Medium priority |
+| `🔽` | Low priority |
+| `📅` | Due date |
+| `⏳` | Scheduled date |
+| `🔁` | Recurring |
+
+#### 4.3 Dataview
+
+No config needed. The queries in your templates work immediately after installation.
+
+#### 4.4 QuickAdd
+
+Settings → QuickAdd → Add Choice → **Capture**:
+
+- Name: `Quick Capture`
+- Target file: `000 Inbox/Inbox.md`
+- Format: `- [ ] {{VALUE}} ➕ {{DATE}}`
+- Assign hotkey: `Cmd/Ctrl + Shift + A`
+
+</details>
+
+<details>
+<summary><h3>Phase 5: Set Up Sync (~30 min)</h3></summary>
+
+**Option A — Obsidian Sync ($4/mo, easiest)**
+
+- Settings → Sync → Connect → create a remote vault
+- Install Obsidian on your work laptop → sign in → connect same vault
+- E2E encrypted, zero IT involvement, works on any machine
+
+**Option B — Syncthing (free, self-hosted)**
+
+- Install from [syncthing.net](https://syncthing.net/) on both machines
+- Add your vault folder as a shared folder
+- Devices sync peer-to-peer — no cloud middleman
+
+</details>
+
+<details>
+<summary><h3>Phase 6: Set Up Telegram Capture Pipeline (~20 min)</h3></summary>
+
+#### 6.1 Create Your Telegram Bot
+
+1. Open Telegram → search **@BotFather**
+2. Send `/newbot`
+3. Name it e.g. `Obsidian Inbox Bot`
+4. Username e.g. `thomas_obsidian_bot` (must end in `bot`)
+5. Copy the **bot token** BotFather returns — looks like `1111111:XXXXXXX...`
+6. Open the new bot → tap **Start**
+
+Save the bot as a contact named **"Obsidian Inbox"** in your phone — this makes forwarding a one-tap action.
+
+#### 6.2 Install + Connect Telegram Sync Plugin
+
+1. Obsidian → Settings → Community Plugins → install **Telegram Sync**
+2. Settings → Telegram Sync → paste your bot token → click **Connect**
+3. Green status = connected
+
+> **Important:** The plugin only runs when Obsidian is open on desktop. Anything you forward from your phone queues in Telegram and syncs the next time you open Obsidian on your Mac/PC.
+
+#### 6.3 Configure Content Routing Rules
+
+**Rule 1 — URLs → `/300 Articles` (new note)**
+
+| Setting | Value |
+|---------|-------|
+| Condition | Message contains URL |
+| Action | Create new note |
+| Folder | `300 Articles` |
+| Filename | `{{content:60}} {{date:YYYY-MM-DD}}` |
+
+**Rule 2 — Plain text → `000 Inbox/Inbox.md` (append)**
+
+| Setting | Value |
+|---------|-------|
+| Condition | Message is text (no URL, no file) |
+| Action | Append to existing note |
+| File | `000 Inbox/Inbox.md` |
+
+**Rule 3 — Files/PDFs → `/400 Resources` (new note)**
+
+| Setting | Value |
+|---------|-------|
+| Condition | Message contains file or document |
+| Action | Create new note |
+| Folder | `400 Resources` |
+| Filename | `{{file:name}} {{date:YYYY-MM-DD}}` |
+
+#### 6.4 Optional: Auto-delete Processed Messages
+
+In Telegram Sync settings, enable **"Delete messages after processing"** to keep the bot chat clean.
+
+#### 6.5 Configure URL Enrichment (Auto Card Link)
+
+Telegram Sync captures URLs as bare links. To convert them into rich previews with titles, descriptions, and thumbnails, install and configure the **Auto Card Link** plugin.
+
+**Install Auto Card Link:**
+
+1. Settings → Community Plugins → Browse → search **"Auto Card Link"**
+2. Install and enable it
+3. (Optional) Repeat for **"Enhance YouTube Links"** — provides better YouTube-specific handling
+
+**Usage — Converting Captured URLs:**
+
+When you open a captured article in `/300 Articles`:
+
+1. Select the bare URL in the note
+2. Open Command Palette (`Cmd/Ctrl+P`)
+3. Type "Auto Card Link: Generate card link block"
+4. The URL transforms into a rich card with title, description, and thumbnail
+
+</details>
+
+<details>
+<summary><h3>Phase 7: Set Up Web Clipper (~5 min)</h3></summary>
+
+#### 7.1 Install the Extension
+
+Install from your browser's extension store — available for Chrome, Firefox, Safari, Brave, Arc, and most Chromium browsers. Search **"Obsidian Web Clipper"** or find it at [obsidian.md/clipper](https://obsidian.md/clipper).
+
+#### 7.2 Configure Web Clipper Settings
+
+1. Click the Web Clipper extension icon → **Settings**
+
+2. **General Settings:**
+   - **Vault:** Select your vault name
+   - **Default folder:** `300 Articles`
+   - **Default template:** `Templates/Web Clipper Article`
+
+3. **Behavior Settings:**
+   - **Open note after capture:** ✅ Enable
+   - **Show confirmation dialog:** ✅ Enable
+   - **Clip selection only:** ⬜ Disable
+
+#### 7.3 When to Use Which
+
+| Scenario | Best Tool | Why |
+|----------|-----------|-----|
+| Quick link on phone | Telegram bot | Fastest, works from any app |
+| Reading article on desktop | Web Clipper | Full content + highlights |
+| LinkedIn on mobile | Telegram bot | LinkedIn app blocks sharing |
+| Research project | Web Clipper | Better formatting, easier batch processing |
+| YouTube video | Telegram bot | Auto Card Link handles it well |
+| PDF or file | Telegram bot | Direct file capture |
+
+</details>
+
+---
+
+## Daily Operations
+
+### Start Here (Quick Reference)
+
+**Test Your Setup (10 min):**
+1. **Telegram:** Send "test" to your Obsidian bot → Check Inbox.md
+2. **Web Clipper:** Capture any article → Check `/300 Articles`
+3. **QuickAdd:** Press `Cmd/Ctrl+Shift+A` → Add task → Check Inbox.md
+
+**Daily Routine:**
+- **Morning:** Open Obsidian → Review [Daily Note](Daily%20Notes) → Check calendar → Set 3 priorities
+- **Throughout:** Capture everything (5 sec max) — don't process now
+- **Evening:** Mark done → Roll unfinished to tomorrow → Note 1-3 things
+- **Friday/Sunday:** [Weekly Review](Weekly%20Reviews) (60 min)
+
+**Capture Cheatsheet:**
+
+| What | How | Where |
+|------|-----|-------|
+| Task | `Cmd/Ctrl+Shift+A` | Inbox.md |
+| Article | Web Clipper or Telegram | /300 Articles |
+| File | Telegram bot | /400 Resources |
+| Thought | Telegram bot | Inbox.md |
+
+**Core Principles:**
+1. **Capture ≠ Process** — Never do both at once
+2. **One next action per project** — Always visible
+3. **Weekly Review is sacred** — Skip it = system dies
+
+**Projects vs Areas:**
+
+**Projects** (`/100 Projects/`) = Things with an **end date**
+- One note per project using [Project template](Templates/Project%20Note.md)
+- Must have ONE visible next action (only if Active)
+- Examples: "Launch website", "File taxes"
+
+**Areas** (`/200 Areas/`) = Ongoing **responsibilities**  
+- One note per area
+- Contains standards, routines, links to projects
+- Examples: "Health", "Finances", "Career", "Family & Social", "DeepL Agent"
+
+**Quick rule:** Can you say "Done by [date]"? Yes = Project, No = Area
+
+**Project Status:**
+- **Active** — Currently being worked on (has next action)
+- **Planned** — Defined but not started yet
+- **Someday** — Future idea, no commitment
+- **Completed** — Done, move to `/500 Archive/`
+
+**Weekly Review:** Decide which Planned projects to activate. Only Active projects need next actions.
+
+**Processing:**
+- Actionable? → Define next step
+- < 2 min? → Do now
+- Delegate? → Tag `#waiting`
+- Multi-step outcome? → Create [Project](Templates/Project%20Note.md)
+- Ongoing responsibility? → Create Area
+
+**Archive Process:**
+- **Projects:** When done or cancelled → Move to `/500 Archive/Projects/`
+- **Articles:** After reading or if >2 weeks old → Move to `/500 Archive/Articles/`
+- **Resources:** When no longer needed → Move to `/500 Archive/Resources/` or delete
+
+**Rule:** If you haven't touched it in 2 weeks and it's not important, archive it.
+
+---
+
+
+---
+
+## Key Decisions & Trade-offs
+
+### 1. Areas Use Standards, Not Recurring Tasks
+
+**Decision:** Area routines are written as plain text standards, not checkbox tasks.
+
+**Why:** 
+- Recurring tasks pollute Daily Note Dataview queries
+- Creates "task guilt" for habits (missed checkbox = failure)
+- Standards are reviewed weekly during Weekly Review, not tracked daily
+
+**Example:**
+```markdown
+❌ Bad: - [ ] Weekly: Exercise 3x 📅  (shows up in Daily Note)
+✅ Good: **Weekly:** Exercise 3x  (reference only, reviewed weekly)
+```
+
+### 2. Dataview Queries Are Scoped
+
+**Decision:** Daily Note only queries `100 Projects` and `000 Inbox`, not all vault.
+
+**Why:**
+- Prevents template examples from appearing as "tasks due today"
+- Prevents Area standards from appearing
+- Keeps Daily Note focused on actual work
+
+### 3. Planned vs Active Projects
+
+**Decision:** Areas track both Active and Planned projects.
+
+**Why:**
+- Large work domains (like "DeepL Agent") need multiple projects
+- Not all projects can be worked on simultaneously
+- Weekly Review decides which Planned projects to activate
+
+**Workflow:**
+1. Project idea → Goes to Area's "Planned" section
+2. Weekly Review → Move to "Active" when ready
+3. Active → Get next action and due date
+4. Completed → Archive
+
+### 4. Separate Folders for Daily/Weekly Notes
+
+**Decision:** Daily Notes and Weekly Reviews go in their own folders, not in PARA.
+
+**Why:**
+- Planning is meta-work, not content
+- Separates capture (Inbox) from planning (Daily Notes)
+- Easier to navigate and find past reviews
+
+### 5. Archive Uses Subfolders
+
+**Decision:** `/500 Archive/` has subfolders: Projects, Articles, Resources.
+
+**Why:**
+- Easier to find old items
+- Different archive rules for different content types
+- Prevents archive from becoming a dump
+
+---
+## For AI Agents: Context Summary
+
+**If you're an AI agent reading this:**
+
+This vault contains a fully configured GTD system. Key things to know:
+
+1. **Projects** are in `/100 Projects/` — each needs ONE next action
+2. **Areas** are in `/200 Areas/` — contain standards, not tasks
+3. **Capture** goes to `/000 Inbox/Inbox.md` or `/300 Articles/`
+4. **Daily workflow:** Check Daily Note (auto-created), capture to Inbox, process in Weekly Review
+5. **Weekly Review:** Friday 4pm or Sunday 10am, 60 minutes
+6. **Monthly Review:** Last Sunday of month
+7. **Dataview queries** are scoped to avoid template pollution
+
+When helping the user:
+- Ask about project status (Active/Planned/Completed)
+- Remind about Weekly Review if overdue
+- Suggest archiving items >2 weeks old
+- Keep Area standards as reference, not daily tasks
+
+---
+
+## Conclusion
+
+This GTD system is designed to be:
+- **Simple** — Minimal plugins, clear workflows
+- **Flexible** — Works with or without AI assistance
+- **Sustainable** — 2.5 hours/week maintenance for 40+ hours of focused work
+- **Resilient** — Three habits prevent system death
+
+The system is live and ready to use. Start by capturing three things today.
+
+---
+
+**Resources:**
+- [GTD Methodology](https://gettingthingsdone.com/what-is-gtd/)
+- [Obsidian Tasks Plugin](https://publish.obsidian.md/tasks/Introduction)
+- [PARA Method](https://fortelabs.com/blog/para/)
