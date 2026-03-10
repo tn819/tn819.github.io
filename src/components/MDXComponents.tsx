@@ -7,7 +7,7 @@ export const MDXComponents = {
     <Typography
       variant="h4"
       gutterBottom
-      sx={{ mt: 4, mb: 2, fontWeight: 600 }}
+      sx={{ mt: 5, mb: 2, fontWeight: 700 }}
       {...props}
     />
   ),
@@ -15,7 +15,14 @@ export const MDXComponents = {
     <Typography
       variant="h5"
       gutterBottom
-      sx={{ mt: 4, mb: 2, fontWeight: 600 }}
+      sx={{
+        mt: 6,
+        mb: 2,
+        fontWeight: 700,
+        pb: 1,
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+      }}
       {...props}
     />
   ),
@@ -23,7 +30,15 @@ export const MDXComponents = {
     <Typography
       variant="h6"
       gutterBottom
-      sx={{ mt: 3, mb: 2, fontWeight: 600 }}
+      sx={{ mt: 4, mb: 1.5, fontWeight: 600, color: 'text.secondary' }}
+      {...props}
+    />
+  ),
+  h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <Typography
+      variant="subtitle1"
+      gutterBottom
+      sx={{ mt: 3, mb: 1, fontWeight: 600, color: 'text.secondary' }}
       {...props}
     />
   ),
