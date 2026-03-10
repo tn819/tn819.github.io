@@ -2,6 +2,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import rehypeSlug from 'rehype-slug'
+import remarkGfm from 'remark-gfm'
 import { Page } from '../../src/components'
 import { MDXComponents } from '../../src/components/MDXComponents'
 import {
@@ -103,7 +104,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   const mdxSource = await serialize(post.content, {
-    mdxOptions: { rehypePlugins: [rehypeSlug] },
+    mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug] },
   })
 
   return {

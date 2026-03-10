@@ -98,6 +98,65 @@ export const MDXComponents = {
       {...props}
     />
   ),
+  table: (props: React.HTMLAttributes<HTMLTableElement>) => (
+    <Box sx={{ overflowX: 'auto', mb: 3 }}>
+      <Box
+        component="table"
+        sx={{
+          width: '100%',
+          borderCollapse: 'collapse',
+          fontSize: '0.9rem',
+        }}
+        {...props}
+      />
+    </Box>
+  ),
+  thead: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <Box
+      component="thead"
+      sx={{ bgcolor: 'background.paper' }}
+      {...props}
+    />
+  ),
+  th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+    <Box
+      component="th"
+      sx={{
+        px: 2,
+        py: 1.5,
+        textAlign: 'left',
+        fontWeight: 600,
+        fontSize: '0.85rem',
+        borderBottom: '2px solid',
+        borderColor: 'divider',
+        whiteSpace: 'nowrap',
+      }}
+      {...props}
+    />
+  ),
+  td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+    <Box
+      component="td"
+      sx={{
+        px: 2,
+        py: 1.25,
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+        verticalAlign: 'top',
+      }}
+      {...props}
+    />
+  ),
+  tr: (props: React.HTMLAttributes<HTMLTableRowElement>) => (
+    <Box
+      component="tr"
+      sx={{
+        '&:last-child td': { borderBottom: 'none' },
+        '&:hover': { bgcolor: 'action.hover' },
+      }}
+      {...props}
+    />
+  ),
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <Box
       component="blockquote"
