@@ -16,6 +16,7 @@
     "sync:vault": "node -e \"require(process.env.HOME + '/.agents/skills/vault-sync/vault-sync.js').main()\"",
     "sync:blog": "node scripts/sync-blog.js $1 && node scripts/validate-blog.js",
     "sync:articles": "node scripts/sync-articles.js $1",
+    "enrich:articles": "node scripts/enrich-articles.js",
     "validate:blog": "node scripts/validate-blog.js"
   },
   "dependencies": {
