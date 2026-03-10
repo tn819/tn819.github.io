@@ -33,18 +33,21 @@ export const MDXComponents = {
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
     <Box component="strong" sx={{ fontWeight: 600 }} {...props} />
   ),
-  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <Link
-      {...props}
-      target="_blank"
-      rel="noopener noreferrer"
-      sx={{
-        color: 'primary.main',
-        textDecoration: 'none',
-        '&:hover': { textDecoration: 'underline' },
-      }}
-    />
-  ),
+  a: ({ href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+    const isAnchor = href?.startsWith('#')
+    return (
+      <Link
+        href={href}
+        {...props}
+        {...(!isAnchor && { target: '_blank', rel: 'noopener noreferrer' })}
+        sx={{
+          color: 'primary.main',
+          textDecoration: 'none',
+          '&:hover': { textDecoration: 'underline' },
+        }}
+      />
+    )
+  },
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <Box component="ul" sx={{ pl: 3, mb: 3 }} {...props} />
   ),

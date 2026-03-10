@@ -27,8 +27,8 @@ export default function BlogPostPage({ post, mdxSource }: BlogPostPageProps) {
           ))}
         </Box>
 
-        {/* Summary/Comment Box */}
-        {(post.summary || post.comment) && (
+        {/* Summary/Comment Box — only show if comment exists or summary differs from description */}
+        {(post.comment || (post.summary && post.summary !== post.description)) && (
           <Box
             sx={{
               bgcolor: 'background.paper',
@@ -39,7 +39,7 @@ export default function BlogPostPage({ post, mdxSource }: BlogPostPageProps) {
               borderColor: 'divider',
             }}
           >
-            {post.summary && (
+            {post.summary && post.summary !== post.description && (
               <Typography variant="body1" sx={{ mb: 2, fontStyle: 'italic' }}>
                 {post.summary}
               </Typography>
