@@ -53,6 +53,25 @@ async function callOllama(prompt, model = 'qwen3-coder') {
   return JSON.parse(raw).response || ''
 }
 
+async function callZen(prompt, model = 'qwen3-coder-plus') {
+  const body = JSON.stringify({
+    model: `opencode/${model}`,
+    messages: [{ role: 'user', content: prompt }],
+    temperature: 0.2,
+  })
+  const raw = await post(https, {
+    hostname: 'opencode.ai',
+    path: '/zen/v1/chat/completions',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.OPENCODE_API_KEY}`,
+    },
+  }, body)
+  const parsed = JSON.parse(raw)
+  return parsed.choices?.[0]?.message?.content || ''
+}
+
 async function callClaude(prompt) {
   const body = JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
@@ -74,15 +93,18 @@ async function callClaude(prompt) {
 }
 
 async function detectProvider() {
-  // Explicit override
   const override = process.env.ENRICH_PROVIDER
   if (override === 'claude') {
     if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY not set')
     return 'claude'
   }
+  if (override === 'zen') {
+    if (!process.env.OPENCODE_API_KEY) throw new Error('OPENCODE_API_KEY not set')
+    return 'zen'
+  }
   if (override === 'ollama') return 'ollama'
 
-  // Auto: try Ollama first (free), fall back to Claude
+  // Auto: Ollama (free, local) → Zen → Claude
   try {
     await new Promise((resolve, reject) => {
       const req = http.get('http://localhost:11434/api/tags', resolve)
@@ -90,14 +112,16 @@ async function detectProvider() {
       req.setTimeout(1000, () => { req.destroy(); reject(new Error('timeout')) })
     })
     return 'ollama'
-  } catch {
-    if (process.env.ANTHROPIC_API_KEY) return 'claude'
-    throw new Error('No provider available — start Ollama or set ANTHROPIC_API_KEY')
-  }
+  } catch { /* not running */ }
+
+  if (process.env.OPENCODE_API_KEY) return 'zen'
+  if (process.env.ANTHROPIC_API_KEY) return 'claude'
+  throw new Error('No provider available — start Ollama, or set OPENCODE_API_KEY or ANTHROPIC_API_KEY')
 }
 
-async function callLLM(prompt, provider, ollamaModel) {
-  if (provider === 'ollama') return callOllama(prompt, ollamaModel)
+async function callLLM(prompt, provider, model) {
+  if (provider === 'ollama') return callOllama(prompt, model || 'qwen3-coder')
+  if (provider === 'zen') return callZen(prompt, model || 'qwen3-coder-plus')
   return callClaude(prompt)
 }
 
@@ -165,11 +189,11 @@ async function run() {
     process.exit(1)
   }
 
-  let provider, ollamaModel
+  let provider, model
   try {
     provider = await detectProvider()
-    ollamaModel = process.env.OLLAMA_MODEL || 'qwen3-coder'
-    console.log(`Using provider: ${provider}${provider === 'ollama' ? ` (${ollamaModel})` : ''}\n`)
+    model = process.env.ENRICH_MODEL || (provider === 'ollama' ? 'qwen3-coder' : 'qwen3-coder-plus')
+    console.log(`Using provider: ${provider} (${model})\n`)
   } catch (e) {
     console.error(`❌ ${e.message}`)
     process.exit(1)
@@ -194,7 +218,7 @@ async function run() {
   for (const filename of toEnrich) {
     process.stdout.write(`  ${filename.substring(0, 55).padEnd(55)} `)
     try {
-      const result = await enrichFile(path.join(VAULT_ARTICLES, filename), provider, ollamaModel)
+      const result = await enrichFile(path.join(VAULT_ARTICLES, filename), provider, model)
       if (result) {
         const filled = Object.entries(result).filter(([, v]) => v).map(([k]) => k).join(', ')
         console.log(`✅  ${filled}`)
