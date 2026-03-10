@@ -157,6 +157,59 @@ export const MDXComponents = {
       {...props}
     />
   ),
+  details: (props: React.HTMLAttributes<HTMLElement>) => (
+    <Box
+      component="details"
+      sx={{
+        border: '1px solid',
+        borderColor: 'divider',
+        borderRadius: 1,
+        mb: 2,
+        '& > *:not(summary)': { paddingLeft: '16px', paddingRight: '16px', paddingBottom: '8px' },
+        '&[open] > summary .summary-arrow': { transform: 'rotate(90deg)' },
+      }}
+      {...props}
+    />
+  ),
+  summary: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <Box
+      component="summary"
+      sx={{
+        px: 2,
+        py: 1.5,
+        cursor: 'pointer',
+        userSelect: 'none',
+        listStyle: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1,
+        fontWeight: 600,
+        fontSize: '1.1rem',
+        '&::-webkit-details-marker': { display: 'none' },
+        '& h1, & h2, & h3, & h4, & h5, & h6': {
+          display: 'inline',
+          margin: '0 !important',
+          padding: '0 !important',
+          fontSize: 'inherit',
+          fontWeight: 'inherit',
+          color: 'inherit',
+          borderBottom: 'none',
+          lineHeight: 'inherit',
+        },
+      }}
+      {...props}
+    >
+      <Box
+        component="span"
+        className="summary-arrow"
+        aria-hidden="true"
+        sx={{ fontSize: '0.6rem', transition: 'transform 0.2s', display: 'inline-block', flexShrink: 0 }}
+      >
+        ▶
+      </Box>
+      {children}
+    </Box>
+  ),
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <Box
       component="blockquote"
