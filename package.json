@@ -13,7 +13,11 @@
     "lint": "next lint",
     "prettier": "prettier --config .prettierrc.json '**/*.ts' --write",
     "prepare": "husky install",
-    "sync:vault": "node -e \"require(process.env.HOME + '/.agents/skills/vault-sync/vault-sync.js').main()\""
+    "sync:vault": "node -e \"require(process.env.HOME + '/.agents/skills/vault-sync/vault-sync.js').main()\"",
+    "sync:blog": "node scripts/sync-blog.js $1 && node scripts/validate-blog.js",
+    "sync:articles": "node scripts/sync-articles.js $1",
+    "enrich:articles": "node scripts/enrich-articles.js",
+    "validate:blog": "node scripts/validate-blog.js"
   },
   "dependencies": {
     "@emotion/cache": "11.14.0",
@@ -29,7 +33,9 @@
     "next-mdx-remote": "6.0.0",
     "react": "19.2.4",
     "react-calendly": "2.2.3",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.1.6",

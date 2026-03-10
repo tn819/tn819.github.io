@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const { parseFrontmatter, generateSlug, extractH1, extractDescription } = require('./sync-shared')
 
-const SITE_BLOG = path.join(process.cwd(), 'content/blog')
+const SITE_ARTICLES = path.join(process.cwd(), 'content/articles')
 
 function writeFrontmatter(data, body) {
   const tagLines = (data.tags || []).map((t) => `  - ${t}`).join('\n')
@@ -13,8 +13,10 @@ function writeFrontmatter(data, body) {
     `date: "${data.date}"`,
     `tags:\n${tagLines}`,
     `published: ${data.published}`,
-    `summary: ${JSON.stringify(data.summary)}`,
     `comment: ${JSON.stringify(data.comment)}`,
+    `author: ${JSON.stringify(data.author)}`,
+    `source: ${JSON.stringify(data.source)}`,
+    `url: ${JSON.stringify(data.url)}`,
   ]
   return `---\n${lines.join('\n')}\n---\n\n${body}`
 }
@@ -27,7 +29,6 @@ function processVaultFile(filePath) {
   const titleFromFilename = filename
     .replace(/\.md$/, '')
     .replace(/\.mdx$/, '')
-    .replace(/^Blog Post - /, '')
     .replace(/[-_]/g, ' ')
     .trim()
 
@@ -40,10 +41,12 @@ function processVaultFile(filePath) {
     title,
     description,
     date,
-    tags: data.tags || ['Blog'],
-    published: data.published !== undefined ? data.published : false,
-    summary: data.summary || description,
+    tags: data.tags || [],
+    published: data.published === true,
     comment: data.comment || '',
+    author: data.author || '',
+    source: data.source || '',
+    url: data.url || '',
   }
 
   const updated = writeFrontmatter(merged, body)
@@ -55,34 +58,34 @@ function resolveVaultPath(argPath) {
   const readline = require('readline')
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
   return new Promise((resolve) => {
-    rl.question('Vault blog path: ', (answer) => {
+    rl.question('Vault articles path: ', (answer) => {
       rl.close()
       resolve(path.resolve(answer.trim().replace(/^~/, process.env.HOME)))
     })
   })
 }
 
-async function syncBlogs(argPath) {
-  const vaultBlog = await resolveVaultPath(argPath)
-  console.log(`🔄 Syncing blogs from ${vaultBlog}...\n`)
+async function syncArticles(argPath) {
+  const vaultArticles = await resolveVaultPath(argPath)
+  console.log(`🔄 Syncing articles from ${vaultArticles}...\n`)
 
-  if (!fs.existsSync(vaultBlog)) {
-    console.error(`❌ Vault not found: ${vaultBlog}`)
+  if (!fs.existsSync(vaultArticles)) {
+    console.error(`❌ Vault not found: ${vaultArticles}`)
     process.exit(1)
   }
 
-  if (!fs.existsSync(SITE_BLOG)) fs.mkdirSync(SITE_BLOG, { recursive: true })
+  if (!fs.existsSync(SITE_ARTICLES)) fs.mkdirSync(SITE_ARTICLES, { recursive: true })
 
   const files = fs
-    .readdirSync(vaultBlog)
+    .readdirSync(vaultArticles)
     .filter((f) => f.endsWith('.md') || f.endsWith('.mdx'))
 
-  console.log(`Found ${files.length} blog file(s) in vault\n`)
+  console.log(`Found ${files.length} article(s) in vault\n`)
 
   files.forEach((filename) => {
-    const vaultPath = path.join(vaultBlog, filename)
+    const vaultPath = path.join(vaultArticles, filename)
     const { slug, data, content } = processVaultFile(vaultPath)
-    fs.writeFileSync(path.join(SITE_BLOG, `${slug}.mdx`), content)
+    fs.writeFileSync(path.join(SITE_ARTICLES, `${slug}.mdx`), content)
     console.log(`✅ ${slug}  (published: ${data.published})`)
   })
 
@@ -90,7 +93,7 @@ async function syncBlogs(argPath) {
 }
 
 if (require.main === module) {
-  syncBlogs(process.argv[2])
+  syncArticles(process.argv[2])
 }
 
-module.exports = { syncBlogs }
+module.exports = { syncArticles }

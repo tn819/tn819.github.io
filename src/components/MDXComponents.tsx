@@ -7,7 +7,7 @@ export const MDXComponents = {
     <Typography
       variant="h4"
       gutterBottom
-      sx={{ mt: 4, mb: 2, fontWeight: 600 }}
+      sx={{ mt: 5, mb: 2, fontWeight: 700 }}
       {...props}
     />
   ),
@@ -15,7 +15,14 @@ export const MDXComponents = {
     <Typography
       variant="h5"
       gutterBottom
-      sx={{ mt: 4, mb: 2, fontWeight: 600 }}
+      sx={{
+        mt: 6,
+        mb: 2,
+        fontWeight: 700,
+        pb: 1,
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+      }}
       {...props}
     />
   ),
@@ -23,7 +30,15 @@ export const MDXComponents = {
     <Typography
       variant="h6"
       gutterBottom
-      sx={{ mt: 3, mb: 2, fontWeight: 600 }}
+      sx={{ mt: 4, mb: 1.5, fontWeight: 600, color: 'text.secondary' }}
+      {...props}
+    />
+  ),
+  h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <Typography
+      variant="subtitle1"
+      gutterBottom
+      sx={{ mt: 3, mb: 1, fontWeight: 600, color: 'text.secondary' }}
       {...props}
     />
   ),
@@ -33,18 +48,21 @@ export const MDXComponents = {
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
     <Box component="strong" sx={{ fontWeight: 600 }} {...props} />
   ),
-  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <Link
-      {...props}
-      target="_blank"
-      rel="noopener noreferrer"
-      sx={{
-        color: 'primary.main',
-        textDecoration: 'none',
-        '&:hover': { textDecoration: 'underline' },
-      }}
-    />
-  ),
+  a: ({ href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+    const isAnchor = href?.startsWith('#')
+    return (
+      <Link
+        href={href}
+        {...props}
+        {...(!isAnchor && { target: '_blank', rel: 'noopener noreferrer' })}
+        sx={{
+          color: 'primary.main',
+          textDecoration: 'none',
+          '&:hover': { textDecoration: 'underline' },
+        }}
+      />
+    )
+  },
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <Box component="ul" sx={{ pl: 3, mb: 3 }} {...props} />
   ),
@@ -76,6 +94,65 @@ export const MDXComponents = {
       sx={{
         fontFamily: 'monospace',
         fontSize: '0.9em',
+      }}
+      {...props}
+    />
+  ),
+  table: (props: React.HTMLAttributes<HTMLTableElement>) => (
+    <Box sx={{ overflowX: 'auto', mb: 3 }}>
+      <Box
+        component="table"
+        sx={{
+          width: '100%',
+          borderCollapse: 'collapse',
+          fontSize: '0.9rem',
+        }}
+        {...props}
+      />
+    </Box>
+  ),
+  thead: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <Box
+      component="thead"
+      sx={{ bgcolor: 'background.paper' }}
+      {...props}
+    />
+  ),
+  th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+    <Box
+      component="th"
+      sx={{
+        px: 2,
+        py: 1.5,
+        textAlign: 'left',
+        fontWeight: 600,
+        fontSize: '0.85rem',
+        borderBottom: '2px solid',
+        borderColor: 'divider',
+        whiteSpace: 'nowrap',
+      }}
+      {...props}
+    />
+  ),
+  td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+    <Box
+      component="td"
+      sx={{
+        px: 2,
+        py: 1.25,
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+        verticalAlign: 'top',
+      }}
+      {...props}
+    />
+  ),
+  tr: (props: React.HTMLAttributes<HTMLTableRowElement>) => (
+    <Box
+      component="tr"
+      sx={{
+        '&:last-child td': { borderBottom: 'none' },
+        '&:hover': { bgcolor: 'action.hover' },
       }}
       {...props}
     />

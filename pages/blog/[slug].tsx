@@ -1,6 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
+import rehypeSlug from 'rehype-slug'
+import remarkGfm from 'remark-gfm'
 import { Page } from '../../src/components'
 import { MDXComponents } from '../../src/components/MDXComponents'
 import {
@@ -26,8 +28,8 @@ export default function BlogPostPage({ post, mdxSource }: BlogPostPageProps) {
           ))}
         </Box>
 
-        {/* Summary/Comment Box */}
-        {(post.summary || post.comment) && (
+        {/* Summary/Comment Box — only show if comment exists or summary differs from description */}
+        {(post.comment || (post.summary && post.summary !== post.description)) && (
           <Box
             sx={{
               bgcolor: 'background.paper',
@@ -38,7 +40,7 @@ export default function BlogPostPage({ post, mdxSource }: BlogPostPageProps) {
               borderColor: 'divider',
             }}
           >
-            {post.summary && (
+            {post.summary && post.summary !== post.description && (
               <Typography variant="body1" sx={{ mb: 2, fontStyle: 'italic' }}>
                 {post.summary}
               </Typography>
@@ -101,7 +103,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   }
 
-  const mdxSource = await serialize(post.content)
+  const mdxSource = await serialize(post.content, {
+    mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug] },
+  })
 
   return {
     props: {

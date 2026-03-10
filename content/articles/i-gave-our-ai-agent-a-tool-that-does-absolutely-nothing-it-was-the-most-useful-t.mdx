@@ -1,0 +1,27 @@
+---
+title: "I gave our AI agent a tool that does absolutely nothing.It was the most useful thing I built in the"
+description: "I gave our AI agent a tool that does absolutely nothing.It was the most useful thing I built in the last 3 months.Here's why 👇We're building Sonarly, an AI agent that investigates production incidents automatically. Wires up Datadog, Sentry, Grafana, the whole stack.Early on, I kept hitting the same wall: the agent would reason well for a while, then get stuck. Not because the model was bad. Because it was missing data.My instinct was to build more integrations. I spent weeks wiring up APIs.The agent still got stuck. Just on different things.So I tried something dumb.I gave the agent one extra tool called magic_fetch.The description: \\"
+date: "2026-03-07"
+tags:
+  - AI
+  - Agents
+  - Engineering
+  - Tools
+published: false
+comment: "A clever product discovery method: give agents a no-op tool and let them describe what they're missing — they'll write your integration roadmap for you."
+author: "Alexandre Klobb"
+source: "www.linkedin.com"
+url: "https://www.linkedin.com/posts/alexandre-klobb-09bb40225_i-gave-our-ai-agent-a-tool-that-does-absolutely-activity-7435734713585258496-himw"
+---
+
+**Forwarded from [Thomas](https://t.me/tommylasvegas)**
+
+
+```cardlink
+url: https://www.linkedin.com/posts/alexandre-klobb-09bb40225_i-gave-our-ai-agent-a-tool-that-does-absolutely-activity-7435734713585258496-himw
+title: "I gave our AI agent a tool that does absolutely nothing.It was the most useful thing I built in the last 3 months.Here&#39;s why 👇We&#39;re building Sonarly, an AI agent that investigates production… | Alexandre Klobb | 12 comments"
+description: "I gave our AI agent a tool that does absolutely nothing.It was the most useful thing I built in the last 3 months.Here's why 👇We're building Sonarly, an AI agent that investigates production incidents automatically. Wires up Datadog, Sentry, Grafana, the whole stack.Early on, I kept hitting the same wall: the agent would reason well for a while, then get stuck. Not because the model was bad. Because it was missing data.My instinct was to build more integrations. I spent weeks wiring up APIs.The agent still got stuck. Just on different things.So I tried something dumb.I gave the agent one extra tool called magic_fetch.The description: \"Use this when you need any data you don't have. Describe what you want.\"Under the hood it did nothing. Logged the call. Returned \"success.\"The agent had no idea.I ran 50 incident simulations.The agent called magic_fetch 134 times.And each call was a perfect, specific description of what it was missing:→ \"Recent deploys for this service in the last 2 hours\"→ \"CPU metrics for the upstream auth-service\"→ \"Feature flags recently toggled for this service\"→ \"Sentry errors grouped by affected user segment\"Nobody told it to ask for this. It reasoned its way there.In one session, I had a full prioritized integration roadmap written by the agent itself.The insight: your agent is a great proxy for your best on-call engineer. Give it a blank canvas to express what it's missing, and it'll spec your product for you.Ship the fake tool first. Build the real ones after.We're in YC W26 right now, building the AI that fixes prod so your team doesn't get paged at 3am.If you're dealing with alert fatigue or slow incident response, I'd love to talk.Full article in the comments 👇 | 12 comments on LinkedIn"
+host: www.linkedin.com
+favicon: https://static.licdn.com/aero-v1/sc/h/al2o9zrvru7aqj8e1x2rzsrca
+image: https://media.licdn.com/dms/image/v2/D5622AQEHrgDgKnuMlg/feedshare-shrink_800/B56ZzBzGIjH8Ag-/0/1772777923607?e=2147483647&v=beta&t=WfU_AXHnMLSFlsYTi_DyHfuHPoSJCLa5ScI-mqkcxCo
+```
