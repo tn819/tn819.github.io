@@ -2,7 +2,6 @@
 const fs = require('fs')
 const path = require('path')
 
-const VAULT_BLOG = path.join(process.env.HOME, 'vault/999 Blog')
 const SITE_BLOG = path.join(process.cwd(), 'content/blog')
 
 function generateSlug(filename) {
@@ -39,10 +38,18 @@ function parseFrontmatter(content) {
   const block = content.substring(4, end)
   const body = content.substring(end + 4).replace(/^\n/, '')
   const data = {}
+  let currentKey = null
   block.split('\n').forEach((line) => {
+    // YAML list item: "  - value" belongs to the previous key
+    if (/^\s+-\s+/.test(line) && currentKey) {
+      const item = line.replace(/^\s+-\s+/, '').trim()
+      if (!Array.isArray(data[currentKey])) data[currentKey] = []
+      data[currentKey].push(item)
+      return
+    }
     const colon = line.indexOf(':')
     if (colon === -1) return
-    const key = line.substring(0, colon).trim()
+    currentKey = line.substring(0, colon).trim()
     let value = line.substring(colon + 1).trim()
     if (
       (value.startsWith('"') && value.endsWith('"')) ||
@@ -50,29 +57,35 @@ function parseFrontmatter(content) {
     ) {
       value = value.slice(1, -1)
     }
-    if (key === 'tags') {
-      try {
-        data[key] = JSON.parse(value)
-      } catch {
-        data[key] = [value]
+    if (currentKey === 'tags') {
+      if (value === '') {
+        // multi-line YAML list — items will be added by subsequent lines
+        data[currentKey] = []
+      } else {
+        try {
+          data[currentKey] = JSON.parse(value)
+        } catch {
+          data[currentKey] = value ? [value] : []
+        }
       }
     } else if (value === 'true') {
-      data[key] = true
+      data[currentKey] = true
     } else if (value === 'false') {
-      data[key] = false
+      data[currentKey] = false
     } else {
-      data[key] = value
+      data[currentKey] = value
     }
   })
   return { data, body }
 }
 
 function writeFrontmatter(data, body) {
+  const tagLines = (data.tags || []).map((t) => `  - ${t}`).join('\n')
   const lines = [
     `title: ${JSON.stringify(data.title)}`,
     `description: ${JSON.stringify(data.description)}`,
-    `date: ${JSON.stringify(data.date)}`,
-    `tags: ${JSON.stringify(data.tags)}`,
+    `date: "${data.date}"`,
+    `tags:\n${tagLines}`,
     `published: ${data.published}`,
     `summary: ${JSON.stringify(data.summary)}`,
     `comment: ${JSON.stringify(data.comment)}`,
@@ -108,28 +121,40 @@ function processVaultFile(filePath) {
   }
 
   const updated = writeFrontmatter(merged, body)
-  fs.writeFileSync(filePath, updated)
   return { slug: generateSlug(filename), data: merged, content: updated }
 }
 
-function syncBlogs() {
-  console.log('🔄 Syncing blogs from vault...\n')
+function resolveVaultPath(argPath) {
+  if (argPath) return path.resolve(argPath.replace(/^~/, process.env.HOME))
+  const readline = require('readline')
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
+  return new Promise((resolve) => {
+    rl.question('Vault blog path: ', (answer) => {
+      rl.close()
+      resolve(path.resolve(answer.trim().replace(/^~/, process.env.HOME)))
+    })
+  })
+}
 
-  if (!fs.existsSync(VAULT_BLOG)) {
-    console.error(`❌ Vault not found: ${VAULT_BLOG}`)
+async function syncBlogs(argPath) {
+  const vaultBlog = await resolveVaultPath(argPath)
+  console.log(`🔄 Syncing blogs from ${vaultBlog}...\n`)
+
+  if (!fs.existsSync(vaultBlog)) {
+    console.error(`❌ Vault not found: ${vaultBlog}`)
     process.exit(1)
   }
 
   if (!fs.existsSync(SITE_BLOG)) fs.mkdirSync(SITE_BLOG, { recursive: true })
 
   const files = fs
-    .readdirSync(VAULT_BLOG)
+    .readdirSync(vaultBlog)
     .filter((f) => f.endsWith('.md') || f.endsWith('.mdx'))
 
   console.log(`Found ${files.length} blog file(s) in vault\n`)
 
   files.forEach((filename) => {
-    const vaultPath = path.join(VAULT_BLOG, filename)
+    const vaultPath = path.join(vaultBlog, filename)
     const { slug, data, content } = processVaultFile(vaultPath)
     fs.writeFileSync(path.join(SITE_BLOG, `${slug}.mdx`), content)
     console.log(`✅ ${slug}  (published: ${data.published})`)
@@ -139,7 +164,7 @@ function syncBlogs() {
 }
 
 if (require.main === module) {
-  syncBlogs()
+  syncBlogs(process.argv[2])
 }
 
 module.exports = { syncBlogs }
