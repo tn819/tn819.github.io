@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs')
 const path = require('path')
+const http = require('http')
 const https = require('https')
-const { parseFrontmatter, generateSlug } = require('./sync-shared')
+const { parseFrontmatter } = require('./sync-shared')
 
 const VAULT_ARTICLES = path.join(
   process.env.HOME,
   'Documents/personal/300 Articles'
 )
+
+const GENERIC_TAGS = ['inbox', 'article', 'clippings', 'Article']
 
 function needsEnrichment(data) {
   return (
@@ -16,111 +19,130 @@ function needsEnrichment(data) {
     !data.url ||
     !data.description ||
     !data.comment ||
-    (data.tags || []).some((t) =>
-      ['inbox', 'article', 'clippings', 'Article'].includes(t)
-    )
+    (data.tags || []).every((t) => GENERIC_TAGS.includes(t))
   )
 }
 
-function callClaude(prompt) {
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set')
-
-  const body = JSON.stringify({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 512,
-    messages: [{ role: 'user', content: prompt }],
-  })
-
+function post(lib, options, body) {
   return new Promise((resolve, reject) => {
-    const req = https.request(
-      {
-        hostname: 'api.anthropic.com',
-        path: '/v1/messages',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-        },
-      },
-      (res) => {
-        let data = ''
-        res.on('data', (chunk) => (data += chunk))
-        res.on('end', () => {
-          try {
-            const parsed = JSON.parse(data)
-            resolve(parsed.content?.[0]?.text || '')
-          } catch {
-            reject(new Error('Failed to parse Claude response'))
-          }
-        })
-      }
-    )
+    const req = lib.request(options, (res) => {
+      let data = ''
+      res.on('data', (chunk) => (data += chunk))
+      res.on('end', () => resolve(data))
+    })
     req.on('error', reject)
     req.write(body)
     req.end()
   })
 }
 
-async function enrichFile(filePath) {
-  const filename = path.basename(filePath)
+async function callOllama(prompt, model = 'qwen3-coder') {
+  const body = JSON.stringify({
+    model,
+    prompt,
+    stream: false,
+    options: { temperature: 0.2 },
+  })
+  const raw = await post(http, {
+    hostname: 'localhost',
+    port: 11434,
+    path: '/api/generate',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  }, body)
+  return JSON.parse(raw).response || ''
+}
+
+async function callClaude(prompt) {
+  const body = JSON.stringify({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 512,
+    messages: [{ role: 'user', content: prompt }],
+  })
+  const raw = await post(https, {
+    hostname: 'api.anthropic.com',
+    path: '/v1/messages',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': process.env.ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+    },
+  }, body)
+  const parsed = JSON.parse(raw)
+  return parsed.content?.[0]?.text || ''
+}
+
+async function detectProvider() {
+  // Explicit override
+  const override = process.env.ENRICH_PROVIDER
+  if (override === 'claude') {
+    if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY not set')
+    return 'claude'
+  }
+  if (override === 'ollama') return 'ollama'
+
+  // Auto: try Ollama first (free), fall back to Claude
+  try {
+    await new Promise((resolve, reject) => {
+      const req = http.get('http://localhost:11434/api/tags', resolve)
+      req.on('error', reject)
+      req.setTimeout(1000, () => { req.destroy(); reject(new Error('timeout')) })
+    })
+    return 'ollama'
+  } catch {
+    if (process.env.ANTHROPIC_API_KEY) return 'claude'
+    throw new Error('No provider available — start Ollama or set ANTHROPIC_API_KEY')
+  }
+}
+
+async function callLLM(prompt, provider, ollamaModel) {
+  if (provider === 'ollama') return callOllama(prompt, ollamaModel)
+  return callClaude(prompt)
+}
+
+function buildPrompt(data, body) {
+  return `Enrich metadata for a saved article. Return ONLY valid JSON, no explanation, no markdown fences.
+
+Current metadata:
+title: ${data.title || ''}
+author: ${data.author || ''}
+source: ${data.source || ''}
+url: ${data.url || ''}
+description: ${data.description || ''}
+tags: ${JSON.stringify(data.tags || [])}
+comment: ${data.comment || ''}
+
+Content preview:
+${body.substring(0, 1500)}
+
+Return JSON with these fields (null if you cannot confidently infer):
+{"author":"full name","source":"domain.com only","url":"full URL if in content","description":"1-2 sentence summary","tags":["2-4 specific tags, not inbox/article/clippings"],"comment":"1-2 sentence take on why this is interesting"}`
+}
+
+async function enrichFile(filePath, provider, ollamaModel) {
   const raw = fs.readFileSync(filePath, 'utf8')
   const { data, body } = parseFrontmatter(raw)
 
   if (!needsEnrichment(data)) return false
 
-  const preview = body.substring(0, 1500)
-  const prompt = `You are enriching metadata for a saved article. Based on the title, existing metadata, and content preview, fill in any missing fields.
+  const response = await callLLM(buildPrompt(data, body), provider, ollamaModel)
 
-Current metadata:
-- title: ${data.title || '(missing)'}
-- author: ${data.author || '(missing)'}
-- source: ${data.source || '(missing)'}
-- url: ${data.url || '(missing)'}
-- description: ${data.description || '(missing)'}
-- tags: ${JSON.stringify(data.tags || [])}
-- comment: ${data.comment || '(missing)'}
+  const jsonMatch = response.match(/\{[\s\S]*\}/)
+  if (!jsonMatch) return false
+  const result = JSON.parse(jsonMatch[0])
 
-Content preview:
-${preview}
-
-Return ONLY a JSON object with these fields (use null for anything you cannot confidently infer):
-{
-  "author": "...",
-  "source": "domain.com only, not full URL",
-  "url": "full URL if found in content",
-  "description": "1-2 sentence summary",
-  "tags": ["2-4 specific tags, no generic ones like inbox/article/clippings"],
-  "comment": "1-2 sentence personal take on why this is interesting"
-}`
-
-  let result
-  try {
-    const response = await callClaude(prompt)
-    const jsonMatch = response.match(/\{[\s\S]*\}/)
-    if (!jsonMatch) return false
-    result = JSON.parse(jsonMatch[0])
-  } catch {
-    console.error(`  ⚠️  Claude failed for ${filename}`)
-    return false
-  }
-
-  // Merge — only fill gaps, don't overwrite existing good values
+  // Only fill gaps — never overwrite existing values
   const updated = { ...data }
   if (!data.author && result.author) updated.author = result.author
   if (!data.source && result.source) updated.source = result.source
   if (!data.url && result.url) updated.url = result.url
   if (!data.description && result.description) updated.description = result.description
   if (!data.comment && result.comment) updated.comment = result.comment
-  if (result.tags?.length) {
-    const hasGeneric = (data.tags || []).every((t) =>
-      ['inbox', 'article', 'clippings', 'Article'].includes(t)
-    )
-    if (hasGeneric) updated.tags = result.tags
+  if (result.tags?.length && (data.tags || []).every((t) => GENERIC_TAGS.includes(t))) {
+    updated.tags = result.tags
   }
 
-  // Rewrite frontmatter
   const tagLines = (updated.tags || []).map((t) => `  - ${t}`).join('\n')
   const lines = [
     `title: ${JSON.stringify(updated.title || '')}`,
@@ -133,8 +155,7 @@ Return ONLY a JSON object with these fields (use null for anything you cannot co
     `comment: ${JSON.stringify(updated.comment || '')}`,
     `date: "${updated.date || ''}"`,
   ]
-  const newContent = `---\n${lines.join('\n')}\n---\n\n${body}`
-  fs.writeFileSync(filePath, newContent)
+  fs.writeFileSync(filePath, `---\n${lines.join('\n')}\n---\n\n${body}`)
   return result
 }
 
@@ -144,13 +165,22 @@ async function run() {
     process.exit(1)
   }
 
+  let provider, ollamaModel
+  try {
+    provider = await detectProvider()
+    ollamaModel = process.env.OLLAMA_MODEL || 'qwen3-coder'
+    console.log(`Using provider: ${provider}${provider === 'ollama' ? ` (${ollamaModel})` : ''}\n`)
+  } catch (e) {
+    console.error(`❌ ${e.message}`)
+    process.exit(1)
+  }
+
   const files = fs
     .readdirSync(VAULT_ARTICLES)
     .filter((f) => f.endsWith('.md') || f.endsWith('.mdx'))
 
   const toEnrich = files.filter((f) => {
-    const raw = fs.readFileSync(path.join(VAULT_ARTICLES, f), 'utf8')
-    const { data } = parseFrontmatter(raw)
+    const { data } = parseFrontmatter(fs.readFileSync(path.join(VAULT_ARTICLES, f), 'utf8'))
     return needsEnrichment(data)
   })
 
@@ -162,16 +192,17 @@ async function run() {
   console.log(`Found ${toEnrich.length} article(s) needing enrichment...\n`)
 
   for (const filename of toEnrich) {
-    process.stdout.write(`  ${filename.substring(0, 60)}... `)
-    const result = await enrichFile(path.join(VAULT_ARTICLES, filename))
-    if (result) {
-      const filled = Object.entries(result)
-        .filter(([, v]) => v)
-        .map(([k]) => k)
-        .join(', ')
-      console.log(`✅ filled: ${filled}`)
-    } else {
-      console.log('(skipped)')
+    process.stdout.write(`  ${filename.substring(0, 55).padEnd(55)} `)
+    try {
+      const result = await enrichFile(path.join(VAULT_ARTICLES, filename), provider, ollamaModel)
+      if (result) {
+        const filled = Object.entries(result).filter(([, v]) => v).map(([k]) => k).join(', ')
+        console.log(`✅  ${filled}`)
+      } else {
+        console.log('—  (already complete)')
+      }
+    } catch (e) {
+      console.log(`⚠️  ${e.message}`)
     }
   }
 
