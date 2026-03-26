@@ -27,6 +27,7 @@
     "@mui/icons-material": "7.3.9",
     "@mui/lab": "7.0.1-beta.23",
     "@mui/material": "7.3.9",
+    "@vercel/analytics": "2.0.1",
     "clsx": "2.1.1",
     "gray-matter": "4.0.3",
     "next": "16.1.6",
